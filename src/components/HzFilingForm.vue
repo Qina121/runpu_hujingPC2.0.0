@@ -145,7 +145,6 @@ export default {
         //   phoneNumber:'',
         //   sex: ''
         // },
-        
       ],
       formLabelAlign: {
         id: null,
