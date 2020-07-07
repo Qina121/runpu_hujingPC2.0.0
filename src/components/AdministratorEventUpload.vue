@@ -1,5 +1,6 @@
 <template>
  <div class="Allbox">
+
    <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
     <el-table
       :data="tableData"
@@ -7,26 +8,21 @@
       show-header
       border  height="800"
     >
-     <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
-      <el-table-column prop="userId" label="用户ID"  width="120"></el-table-column>
-      <el-table-column prop="applyUser" label="用户"  width="120"></el-table-column>
-      <!-- <el-table-column prop="auditState" label="状态" width="160"></el-table-column> -->
-      <el-table-column prop="statrtTime" label="开始时间"  width="160"></el-table-column>
-      <el-table-column prop="endTime" label="结束时间" width="160"></el-table-column>
-      <el-table-column prop="houseNumber" label="家庭号码" width="160"></el-table-column>
-      <el-table-column prop="plateNumber" label="车牌" width="160"></el-table-column>
-     <el-table-column prop="applyDesc" label="描述"  width="120"></el-table-column>
-      <el-table-column prop="phoneNumber" label="手机号"  width="250"></el-table-column>
-      
+      <el-table-column prop="location" label="地址"  width="160"></el-table-column>
+      <el-table-column prop="createTime" label="创建日期"  width="160"></el-table-column>
+      <el-table-column prop="id" label="ID" width="160"></el-table-column>
+      <!-- <el-table-column prop="attachment" label="附件" width="160"></el-table-column> -->
+      <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
+      <el-table-column prop="eventDescription" label="事件描述" width="160"></el-table-column>
+      <el-table-column prop="uploadId" label="上传ID"  width="160"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column  label="操作" width="200">
+      <el-table-column  label="操作" width="120">
         <template slot-scope="scope">
-          <!-- {{scope.row.auditState=== 1? '未审核': '已审核'}} -->
-          <div v-if="scope.row.auditState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
-        <el-button v-if="scope.row.auditState === 1"
+          <!-- <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已审核</div> -->
+        <!-- <el-button v-if="scope.row.reapirState === 1"
           size="mini"
-          @click="approved(scope.$index, scope.row)">未处理</el-button>
+          @click="approved(scope.$index, scope.row)">通过审核</el-button> -->
           <el-button
           size="mini"
           @click="deleteData(scope.$index, scope.row, tableData)">删除</el-button>
@@ -98,7 +94,7 @@
 <script>
 
 export default {
-  name: "VehicleManagement",
+  name: "AdministratorEventUpload",
   props: {
     msg: String
   },
@@ -147,13 +143,25 @@ export default {
       labelPosition: 'right',
     };
   },
-  mounted(){
+  created(){
     //初始化数据
     this.showTableData()
   },
   methods: {
     formatter(row, column) {
       return row.address;
+    },
+        // 获取后台总表数据
+    showTableData() {
+      const that = this
+      this.$axios.get('https://api.huijingwuye6688.com/eventsUpload/PCSelectAll').then(function(res){
+        that.tableData = []
+        that.tableData = res.data.data
+
+        console.log(that.tableData)
+      }).catch(function(err){
+        console.log(err)
+      })
     },
     //修改表单数据,数据回填
     changeData(index,item) {
@@ -163,7 +171,6 @@ export default {
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
       const http = 'https://api.huijingwuye6688.com/notice/selectOneById/'+id
-      
       this.$axios.get(http).then(function(res){
         //先获取数据回填
         const data = res.data.data
@@ -208,7 +215,7 @@ export default {
       //   landlordId:item.landlordId
       // }
       const id = Number(item.id)
-      const http = 'https://api.huijingwuye6688.com/vehicleManager/delete/'+id
+      const http = 'https://api.huijingwuye6688.com/eventsUpload/delete/'+id
       this.$axios.get(http).then(function(res){
         if(res.data.success) {
           that.$message({
@@ -285,7 +292,7 @@ export default {
     closeChangeForm() {
       this.showChangeForm = false
     },
-    //车辆通过审核
+    //报修通过审核
     approved(index,item) {
       console.log(index, item)
       const that = this
@@ -294,7 +301,8 @@ export default {
         userId : item.userId,
         phoneNumber : item.phoneNumber,
       }
-      const http = 'https://api.huijingwuye6688.com/vehicleManager/updateVehicleState/'+2+'/'+item.id+'/'+item.phoneNumber
+      // const id = Number(item.id)
+      const http = 'https://api.huijingwuye6688.com/repairInfo/updateRepairState/'+2+'/'+item.id+'/'+item.phoneNumber
         this.$axios.get(http).then(function(res){
           if(res.data.success) {
             that.$message({
@@ -308,18 +316,7 @@ export default {
           console.log(err)
         })
     },
-    // 获取后台总表数据
-    showTableData() {
-      const that = this
-      this.$axios.get('https://api.huijingwuye6688.com/vehicleManager/PCSelectAll').then(function(res){
-        that.tableData = []
-        that.tableData = res.data.data
 
-        console.log(that.tableData)
-      }).catch(function(err){
-        console.log(err)
-      })
-    }
   }
 };
 </script>

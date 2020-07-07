@@ -23,13 +23,13 @@
       <el-table-column  label="操作" width="200">
         <template slot-scope="scope">
           <!-- {{scope.row.auditState=== 1? '未审核': '已审核'}} -->
-          <div v-if="scope.row.auditState !== 1">已处理</div>
+          <div v-if="scope.row.auditState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
         <el-button v-if="scope.row.auditState === 1"
           size="mini"
           @click="approved(scope.$index, scope.row)">未处理</el-button>
-          <!-- <el-button
+          <el-button
           size="mini"
-          @click="deleteData(scope.$index, scope.row, tableData)">删除</el-button> -->
+          @click="deleteData(scope.$index, scope.row, tableData)">删除</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -207,17 +207,14 @@ export default {
       //   landlordId:item.landlordId
       // }
       const id = Number(item.id)
-      const http = 'https://api.huijingwuye6688.com/notice/deleteById/'+id
+      const http = 'https://api.huijingwuye6688.com/garbageClassfy/delete/'+id
       this.$axios.get(http).then(function(res){
         if(res.data.success) {
           that.$message({
             message: res.data.message,
             type: 'success'
           });
-          // console.log(rows)
-          // rows.splice(index, 1);
           that.showTableData()
-          location.reload();
           
         }
       }).catch(function(err){

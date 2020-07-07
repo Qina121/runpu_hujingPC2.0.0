@@ -286,6 +286,12 @@ export default {
     //添加用户表单
     submitAddForm(formName) {
       const that = this
+      let uploadPictures = ''
+      if(that.noticeImageId) {
+        uploadPictures = that.noticeImageId.join(",")
+      } else {
+        uploadPictures = null
+      }
       const obj = {
         announceTime: formName.announceTime,
         content: formName.content,
@@ -293,7 +299,7 @@ export default {
         creatorName: formName.creatorName,
         title: formName.title,
         views: formName.views,
-        attachment: that.noticeImageId.join(",")
+        attachment: uploadPictures
       }
         // 返回后台添加单条的信息
         this.$axios.post('https://api.huijingwuye6688.com/notice/insertNotice',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
@@ -315,6 +321,12 @@ export default {
     // 修改单条信息并提交
     changeForm(formName) {
         const that = this
+        let uploadPictures = ''
+        if(that.noticeImageId) {
+          uploadPictures = that.noticeImageId.join(",")
+        } else {
+          uploadPictures = null
+        }
         const obj = {
             announceTime: formName.announceTime,
             content: formName.content,
@@ -324,7 +336,7 @@ export default {
             id: formName.id,
             title: formName.title,
             views: formName.views,
-            attachment: that.noticeImageId.join(",")
+            attachment: uploadPictures
         }
         const updateHttp = 'https://api.huijingwuye6688.com/notice/update'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){

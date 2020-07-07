@@ -14,6 +14,10 @@ import HzFilingForm from '../components/HzFilingForm.vue'
 import Commodity from '../components/Commodity.vue'
 import PurchaseList from '../components/PurchaseList.vue'
 
+import AdministratorVehicleMnagement from '../components/AdministratorVehicleMnagement.vue'
+import AdministratorServiceManagement from '../components/AdministratorServiceManagement.vue'
+import AdministratorEventUpload from '../components/AdministratorEventUpload.vue'
+
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -98,6 +102,21 @@ VueRouter.prototype.push = function push(location) {
         path: 'PurchaseList',
         name: 'PurchaseList',
         component: PurchaseList,
+      },
+      {
+        path: 'AdministratorVehicleMnagement',
+        name: 'AdministratorVehicleMnagement',
+        component: AdministratorVehicleMnagement,
+      },
+      {
+        path: 'AdministratorServiceManagement',
+        name: 'AdministratorServiceManagement',
+        component: AdministratorServiceManagement,
+      },
+      {
+        path: 'AdministratorEventUpload',
+        name: 'AdministratorEventUpload',
+        component: AdministratorEventUpload,
       },
 
     ]

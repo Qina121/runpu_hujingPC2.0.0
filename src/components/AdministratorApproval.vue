@@ -7,9 +7,9 @@
       show-header
       border  height="800"
     >
-      <el-table-column prop="commonAddress" label="地址"  width="120"></el-table-column>
-      <el-table-column prop="createTime" label="创建日期"  width="120"></el-table-column>
-      <el-table-column prop="headImage" label="头像" width="160"></el-table-column>
+      <!-- <el-table-column prop="commonAddress" label="地址"  width="120"></el-table-column> -->
+      <!-- <el-table-column prop="createTime" label="创建日期"  width="120"></el-table-column> -->
+      <!-- <el-table-column prop="headImage" label="头像" width="160"></el-table-column> -->
       <el-table-column prop="id" label="ID" width="160"></el-table-column>
       <el-table-column prop="realName" label="名字" width="160"></el-table-column>
       <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>

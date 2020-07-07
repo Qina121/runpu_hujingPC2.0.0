@@ -15,7 +15,7 @@
           active-text-color="#ffd04b"
           :default-active="$route.path" router
         >
-          <el-submenu index="1">
+          <!-- <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>用户管理</span>
@@ -25,8 +25,8 @@
               <el-menu-item index="1-2">管理员管理</el-menu-item>
               <el-menu-item index="1-3">重点关照</el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="2">
+          </el-submenu> -->
+          <!-- <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>服务审批</span>
@@ -34,19 +34,7 @@
             <el-menu-item-group>
               <el-menu-item index="2-1">申请审批</el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
-           <el-submenu index="">
-            <template slot="title">
-              <i class="el-icon-s-goods"></i>
-              <span>积分商城</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/home/Commodity">线上商品</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <el-menu-item index="/home/PurchaseList">购买列表</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+          </el-submenu> -->
           <el-menu-item index="/home/Notice">
             <i class="el-icon-menu"></i>
             <span slot="title">通知公告</span>
@@ -55,18 +43,40 @@
             <i class="el-icon-setting"></i>
             <span slot="title">管理员审批</span>
           </el-menu-item>
-          <el-menu-item index="/home/WarrantyApproval">
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-document"></i>
+              <span>管理员提交</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/AdministratorServiceManagement" >服务管理</el-menu-item>
+              <el-menu-item index="/home/AdministratorVehicleMnagement" >车辆管理</el-menu-item>
+              <el-menu-item index="/home/AdministratorEventUpload" >事件上传</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="/">
+            <template slot="title">
+              <i class="el-icon-tickets"></i>
+              <span>非管理员提交</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/WarrantyApproval" >报修审批</el-menu-item>
+              <el-menu-item index="/home/RefuseClassification" >垃圾分类</el-menu-item>
+              <el-menu-item index="/home/VehicleManagement" >车辆审批</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <!-- <el-menu-item index="/home/WarrantyApproval">
             <i class="el-icon-remove-outline"></i>
             <span slot="title">报修审批</span>
-          </el-menu-item>
-          <el-menu-item index="/home/RefuseClassification">
+          </el-menu-item> -->
+          <!-- <el-menu-item index="/home/RefuseClassification">
             <i class="el-icon-help"></i>
             <span slot="title">垃圾分类</span>
-          </el-menu-item>
-          <el-menu-item index="/home/VehicleManagement">
+          </el-menu-item> -->
+          <!-- <el-menu-item index="/home/VehicleManagement">
             <i class="el-icon-s-flag"></i>
             <span slot="title">车辆审批</span>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-submenu index="/home">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -77,6 +87,18 @@
               <!-- <el-menu-item index="/home/OtherRecordForm" >户本</el-menu-item> -->
               <el-menu-item index="/home/UserRecordForm" >用户</el-menu-item>
               <el-menu-item index="/home/HzFilingForm" >户主</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="">
+            <template slot="title">
+              <i class="el-icon-s-goods"></i>
+              <span>积分商城</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/Commodity">线上商品</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="/home/PurchaseList">购买列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
