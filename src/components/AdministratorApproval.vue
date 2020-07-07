@@ -147,13 +147,25 @@ export default {
       labelPosition: 'right',
     };
   },
-  mounted(){
+  created(){
     //初始化数据
     this.showTableData()
   },
   methods: {
     formatter(row, column) {
       return row.address;
+    },
+    // 获取后台总表数据
+    showTableData() {
+      const that = this
+      this.$axios.get('https://api.huijingwuye6688.com/ManageInfo/selectAllManageState').then(function(res){
+        that.tableData = []
+        that.tableData = res.data.data
+
+        console.log(that.tableData)
+      }).catch(function(err){
+        console.log(err)
+      })
     },
     //修改表单数据,数据回填
     changeData(index,item) {
@@ -214,10 +226,7 @@ export default {
             message: res.data.message,
             type: 'success'
           });
-          // console.log(rows)
-          // rows.splice(index, 1);
           that.showTableData()
-          location.reload();
           
         }
       }).catch(function(err){
@@ -246,7 +255,6 @@ export default {
             that.closeAddForm()
             //重新回去全部数据
             that.showTableData() 
-            location.reload();
           }
         }).catch(function(err){
           console.log(err)
@@ -306,18 +314,6 @@ export default {
           console.log(err)
         })
     },
-    // 获取后台总表数据
-    showTableData() {
-      const that = this
-      this.$axios.get('https://api.huijingwuye6688.com/ManageInfo/selectAllManageState').then(function(res){
-        that.tableData = []
-        that.tableData = res.data.data
-
-        console.log(that.tableData)
-      }).catch(function(err){
-        console.log(err)
-      })
-    }
   }
 };
 </script>

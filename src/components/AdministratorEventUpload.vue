@@ -151,7 +151,7 @@ export default {
     formatter(row, column) {
       return row.address;
     },
-        // 获取后台总表数据
+    // 获取后台总表数据
     showTableData() {
       const that = this
       this.$axios.get('https://api.huijingwuye6688.com/eventsUpload/PCSelectAll').then(function(res){
@@ -251,7 +251,6 @@ export default {
             that.closeAddForm()
             //重新回去全部数据
             that.showTableData() 
-            location.reload();
           }
         }).catch(function(err){
           console.log(err)

@@ -251,7 +251,6 @@ export default {
             that.closeAddForm()
             //重新回去全部数据
             that.showTableData() 
-            location.reload();
           }
         }).catch(function(err){
           console.log(err)

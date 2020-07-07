@@ -1,6 +1,6 @@
 <template>
  <div class="Allbox">
-   <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
+   <el-button type="primary" @click="addData()">添加数据</el-button>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -34,26 +34,45 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加表单 -->
+       <!-- 添加表单 -->
     <div class="modifyFrom" v-if="showAddForm">
        <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
-        <el-form-item label="发布日期">
-          <el-input v-model="formLabelAlign.announceTime"></el-input>
+        <el-form-item label="申请人姓名">
+          <el-input v-model="formLabelAlign.applyUser"></el-input>
         </el-form-item>
-        <el-form-item label="内容">
-          <el-input v-model="formLabelAlign.content"></el-input>
+        <el-form-item label="电话号码">
+          <el-input v-model="formLabelAlign.phoneNumber"></el-input>
         </el-form-item>
-        <el-form-item label="创建日期">
-          <el-input v-model="formLabelAlign.createTime"></el-input>
+        <!-- 查userId按钮 -->
+        <el-form-item>
+          <el-button type="primary" @click="lookId(formLabelAlign.applyUser,formLabelAlign.phoneNumber)">请填写姓名和电话号码查询用户ID</el-button>
         </el-form-item>
-        <el-form-item label="标题">
-          <el-input v-model="formLabelAlign.title"></el-input>
+        <el-form-item label="用户ID">
+          <el-input v-model="formLabelAlign.userId"></el-input>
         </el-form-item>
-        <el-form-item label="浏览量">
-          <el-input v-model="formLabelAlign.views"></el-input>
+        <el-form-item label="门牌号">
+          <el-input v-model="formLabelAlign.houseNumber"></el-input>
         </el-form-item>
-        <el-form-item label="发布者ID">
-          <el-input v-model="formLabelAlign.creatorId"></el-input>
+        <el-form-item label="开始时间">
+          <!-- <el-input v-model="formLabelAlign.statrtTime"></el-input> -->
+          <el-date-picker style="width:100%" v-model="formLabelAlign.statrtTime" type="date" placeholder="选择开始日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="结束时间">
+          <!-- <el-input v-model="formLabelAlign.endTime"></el-input> -->
+          <el-date-picker style="width:100%" v-model="formLabelAlign.endTime" type="date" placeholder="选择结束日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="申请描述">
+          <el-input v-model="formLabelAlign.applyDesc"></el-input>
+        </el-form-item>
+        <!-- <el-form-item label="申请状态">
+          <el-input v-model="formLabelAlign.auditState"></el-input>
+        </el-form-item> -->
+        <el-form-item label="创建时间">
+          <!-- <el-input v-model="formLabelAlign.createTime"></el-input> -->
+          <el-date-picker style="width:100%" v-model="formLabelAlign.createTime" type="date" placeholder="选择创建日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="车牌">
+          <el-input v-model="formLabelAlign.plateNumber"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitAddForm(formLabelAlign)">立即添加</el-button>
@@ -121,14 +140,16 @@ export default {
         
       ],
       formLabelAlign: {
-        announceTime: null,
-        content: null,
+        userId: null,
+        applyUser: null,
+        phoneNumber: null,
+        houseNumber: null,
+        statrtTime: null,
+        endTime: null,
+        applyDesc: null,
+        auditState: null,
         createTime: null,
-        creatorId: null,
-        creatorName: null,
-        id: null,
-        title: null,
-        views: null,
+        plateNumber: null,
       },
       changeformLabelAlign: {
         name: null,
@@ -185,18 +206,16 @@ export default {
     addData() {
       const that = this
       that.formLabelAlign= {
-        name: null,
-        number: null,
-        type: null,
-        carId:null,
-        frid:null,
-        address:null,
-        zctype:null,
-        gz:null,
-        id:null,
-        landlordRelationshipNumber:null,
-        sex: null,
-        landlordId:null
+        userId: null,
+        applyUser: null,
+        phoneNumber: null,
+        houseNumber: null,
+        statrtTime: null,
+        endTime: null,
+        applyDesc: null,
+        auditState: null,
+        createTime: null,
+        plateNumber: null,
       },
       that.showAddForm = true
     },
@@ -222,19 +241,55 @@ export default {
         console.log(err)
       })
     },
+    //查用户ID
+    lookId(name,number) {
+      const that = this
+      const http = 'https://api.huijingwuye6688.com/vehicleManager/PCSelectOneUserInfo/'+name+'/'+number
+      this.$axios.get(http).then(function(res){
+        //先获取数据回填
+        console.log(res.data.data)
+        that.formLabelAlign.userId = res.data.data
+      }).catch(function(err){
+        console.log(err)
+      })
+    },
     //添加用户表单
     submitAddForm(formName) {
       const that = this
+      //处理时间
+      let sTime = ''
+      let eTime = ''
+      let cTime = ''
+      if(formName.statrtTime) {
+        sTime = that.uploadDate(formName.statrtTime)
+      }
+      if(formName.endTime) {
+        eTime = that.uploadDate(formName.endTime)
+      }
+      if(formName.createTime) {
+        cTime = that.uploadDate(formName.createTime)
+      }
+      if(!formName.userId) {
+        that.$message({
+          message: '用户ID为空,无法添加数据',
+          type: 'error'
+        });
+        return
+      }
       const obj = {
-        announceTime: formName.announceTime,
-        content: formName.content,
-        createTime: formName.createTime,
-        creatorName: formName.creatorName,
-        title: formName.title,
-        views: formName.views,
+        userId: formName.userId,
+        applyUser: formName.applyUser,
+        phoneNumber: formName.phoneNumber,
+        houseNumber: formName.houseNumber,
+        statrtTime: sTime,
+        endTime: eTime,
+        applyDesc: formName.applyDesc,
+        auditState: 2,
+        createTime: cTime,
+        plateNumber: formName.plateNumber,
       }
         // 返回后台添加单条的信息
-        this.$axios.post('https://api.huijingwuye6688.com/notice/insertNotice',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+        this.$axios.post('https://api.huijingwuye6688.com/vehicleManager/PCInsert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           console.log(res);
           if(res.data.success) {
             that.$message({
@@ -244,7 +299,6 @@ export default {
             that.closeAddForm()
             //重新回去全部数据
             that.showTableData() 
-            location.reload();
           }
         }).catch(function(err){
           console.log(err)

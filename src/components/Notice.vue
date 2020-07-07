@@ -38,20 +38,22 @@
     <div class="modifyFrom" v-if="showAddForm">
        <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
         <el-form-item label="发布日期">
-          <el-input v-model="formLabelAlign.announceTime"></el-input>
+          <!-- <el-input v-model="formLabelAlign.announceTime"></el-input> -->
+           <el-date-picker style="width:100%" v-model="formLabelAlign.announceTime" type="date" placeholder="选择发布日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="内容">
           <el-input v-model="formLabelAlign.content"></el-input>
         </el-form-item>
         <el-form-item label="创建日期">
-          <el-input v-model="formLabelAlign.createTime"></el-input>
+          <!-- <el-input v-model="formLabelAlign.createTime"></el-input> -->
+           <el-date-picker style="width:100%" v-model="formLabelAlign.createTime" type="date" placeholder="选择创建日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="标题">
           <el-input v-model="formLabelAlign.title"></el-input>
         </el-form-item>
-        <el-form-item label="浏览量">
+        <!-- <el-form-item label="浏览量">
           <el-input v-model="formLabelAlign.views"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="发布者ID">
           <el-input v-model="formLabelAlign.creatorId"></el-input>
         </el-form-item>
@@ -82,20 +84,22 @@
             <el-input v-model="formLabelAlign.landlordId"></el-input>
           </el-form-item> -->
           <el-form-item label="发布日期">
-          <el-input v-model="changeformLabelAlign.announceTime"></el-input>
+          <!-- <el-input v-model="changeformLabelAlign.announceTime"></el-input> -->
+          <el-date-picker style="width:100%" v-model="changeformLabelAlign.announceTime" type="date" placeholder="选择发布日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="内容">
           <el-input v-model="changeformLabelAlign.content"></el-input>
         </el-form-item>
         <el-form-item label="创建日期">
-          <el-input v-model="changeformLabelAlign.createTime"></el-input>
+          <!-- <el-input v-model="changeformLabelAlign.createTime"></el-input> -->
+          <el-date-picker style="width:100%" v-model="changeformLabelAlign.createTime" type="date" placeholder="选择创建日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="标题">
           <el-input v-model="changeformLabelAlign.title"></el-input>
         </el-form-item>
-        <el-form-item label="浏览量">
+        <!-- <el-form-item label="浏览量">
           <el-input v-model="changeformLabelAlign.views"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="发布者ID">
           <el-input v-model="changeformLabelAlign.creatorId"></el-input>
         </el-form-item>
@@ -183,13 +187,25 @@ export default {
       labelPosition: 'right',
     };
   },
-  mounted(){
+  created(){
     //初始化数据
     this.showTableData()
   },
   methods: {
     formatter(row, column) {
       return row.address;
+    },
+    // 获取后台总表数据
+    showTableData() {
+      const that = this
+      this.$axios.get('https://api.huijingwuye6688.com/notice/selectAllNotice').then(function(res){
+        that.tableData = []
+        that.tableData = res.data.data
+
+        console.log(that.tableData)
+      }).catch(function(err){
+        console.log(err)
+      })
     },
     //修改表单数据,数据回填
     changeData(index,item) {
@@ -250,10 +266,7 @@ export default {
             message: res.data.message,
             type: 'success'
           });
-          // console.log(rows)
-          // rows.splice(index, 1);
           that.showTableData()
-          location.reload();
           
         }
       }).catch(function(err){
@@ -286,6 +299,15 @@ export default {
     //添加用户表单
     submitAddForm(formName) {
       const that = this
+      //处理时间
+      let aTime = ''
+      let cTime = ''
+      if(formName.announceTime) {
+        aTime = that.uploadDate(formName.announceTime)
+      }
+      if(formName.createTime) {
+        cTime = that.uploadDate(formName.createTime)
+      }
       let uploadPictures = ''
       if(that.noticeImageId) {
         uploadPictures = that.noticeImageId.join(",")
@@ -293,12 +315,12 @@ export default {
         uploadPictures = null
       }
       const obj = {
-        announceTime: formName.announceTime,
+        announceTime: aTime,
         content: formName.content,
-        createTime: formName.createTime,
-        creatorName: formName.creatorName,
+        createTime: cTime,
+        creatorId: formName.creatorId,
         title: formName.title,
-        views: formName.views,
+        views: 0,
         attachment: uploadPictures
       }
         // 返回后台添加单条的信息
@@ -312,7 +334,6 @@ export default {
             that.closeAddForm()
             //重新回去全部数据
             that.showTableData() 
-            location.reload();
           }
         }).catch(function(err){
           console.log(err)
@@ -321,6 +342,15 @@ export default {
     // 修改单条信息并提交
     changeForm(formName) {
         const that = this
+        //处理时间
+        let aTime = ''
+        let cTime = ''
+        if(formName.announceTime) {
+          aTime = that.uploadDate(formName.announceTime)
+        }
+        if(formName.createTime) {
+          cTime = that.uploadDate(formName.createTime)
+        }
         let uploadPictures = ''
         if(that.noticeImageId) {
           uploadPictures = that.noticeImageId.join(",")
@@ -328,14 +358,14 @@ export default {
           uploadPictures = null
         }
         const obj = {
-            announceTime: formName.announceTime,
+            announceTime: aTime,
             content: formName.content,
-            createTime: formName.createTime,
+            createTime: cTime,
             creatorId: formName.creatorId,
             creatorName: formName.creatorName,
             id: formName.id,
             title: formName.title,
-            views: formName.views,
+            views: 0,
             attachment: uploadPictures
         }
         const updateHttp = 'https://api.huijingwuye6688.com/notice/update'
@@ -359,18 +389,6 @@ export default {
     //关闭数据更改惶窗口
     closeChangeForm() {
       this.showChangeForm = false
-    },
-    // 获取后台总表数据
-    showTableData() {
-      const that = this
-      this.$axios.get('https://api.huijingwuye6688.com/notice/selectAllNotice').then(function(res){
-        that.tableData = []
-        that.tableData = res.data.data
-
-        console.log(that.tableData)
-      }).catch(function(err){
-        console.log(err)
-      })
     },
     //上传图片
     handleAvatarSuccess(res, file) {
@@ -416,6 +434,12 @@ export default {
       }).catch(function(err){
         console.log(err)
       })
+    },
+    //时间处理
+    uploadDate(date) {
+      let d = new Date(date)
+      let datetime=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      return datetime
     }
   }
 };
