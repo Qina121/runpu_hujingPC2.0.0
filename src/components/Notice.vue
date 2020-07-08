@@ -19,7 +19,7 @@
       <el-table-column prop="views" label="浏览量"  width="250"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column  label="操作" width="280">
+      <el-table-column fixed="right"  label="操作" width="280">
         <template slot-scope="scope">
         <el-button
           size="mini"
@@ -460,6 +460,7 @@ export default {
     border-radius: 10px;
     /* display: none; */
     overflow: auto;
+    z-index: 99;
 }
 .showPicture{
   position: absolute;
@@ -475,6 +476,7 @@ export default {
     border-radius: 10px;
     /* display: none; */
     overflow: auto;
+    z-index: 99;
 }
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;

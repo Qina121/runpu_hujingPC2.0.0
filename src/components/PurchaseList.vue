@@ -16,7 +16,7 @@
       <el-table-column prop="totalScore" label="剩余积分" width="160"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column  label="操作" width="200">
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <div v-if="scope.row.userState !== 1">已处理</div>
         <el-button v-if="scope.row.userState === 1"

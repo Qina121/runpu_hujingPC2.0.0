@@ -15,7 +15,7 @@
       <el-table-column prop="details" label="描述" width="160"></el-table-column>
       <el-table-column prop="userId" label="用户Id" width="160"></el-table-column>
       <el-table-column prop="score" label="积分" width="160"></el-table-column>
-      <el-table-column  label="操作" width="120">
+      <el-table-column label="操作" width="120">
         <template slot-scope="scope">
           <!-- <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已审核</div> -->
         <!-- <el-button v-if="scope.row.reapirState === 1"

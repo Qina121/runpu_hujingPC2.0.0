@@ -17,7 +17,7 @@
       <el-table-column prop="parkingTime" label="停放时间" width="160"></el-table-column>
       <el-table-column prop="details" label="描述" width="160"></el-table-column>
       <el-table-column prop="rfidInfo" label="rfid信息"  width="250"></el-table-column>
-      <el-table-column  label="操作" width="120">
+      <el-table-column fixed="right" label="操作" width="120">
         <template slot-scope="scope">
           <!-- <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已审核</div> -->
         <!-- <el-button v-if="scope.row.reapirState === 1"

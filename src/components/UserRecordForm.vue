@@ -19,7 +19,7 @@
       <el-table-column prop="userAddress" label="地址"  width="250"></el-table-column>
       <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 1? '未关照': '关照'}}</template></el-table-column>
-      <el-table-column  label="操作" width="200">
+      <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <!-- <el-button
           size="mini"
@@ -473,6 +473,7 @@ export default {
     border-radius: 10px;
     /* display: none; */
     overflow: auto;
+    z-index: 99;
 }
 
 </style>

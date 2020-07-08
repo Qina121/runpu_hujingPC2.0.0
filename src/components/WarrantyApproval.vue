@@ -18,7 +18,7 @@
       <el-table-column prop="userId" label="用户ID"  width="160"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column  label="操作" width="200">
+      <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
         <el-button v-if="scope.row.reapirState === 1"
