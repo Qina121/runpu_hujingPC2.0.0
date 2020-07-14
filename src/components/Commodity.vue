@@ -231,6 +231,16 @@ export default {
           goodsDescribe:form.goodsDescribe,
           goodsPicture:that.uploadFilesOfMall
         }
+        //序号不可以重复
+        for(let i = 0; i<that.tableData.length; i++) {
+          if(form.goodsId == that.tableData[i].goodsId) {
+            that.$message({
+              message: '序号重复无法提交',
+              type: 'error'
+            });
+            return false
+          }
+        }
         const updateHttp = 'https://api.huijingwuye6688.com/MallGoods/pcInsert'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
