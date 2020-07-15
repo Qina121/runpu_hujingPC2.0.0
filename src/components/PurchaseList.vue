@@ -7,19 +7,24 @@
       show-header
       border  height="800"
     >
-      <el-table-column prop="id" label="id"  width="160"></el-table-column>
-      <el-table-column prop="name" label="姓名"  width="160"></el-table-column>
-      <el-table-column prop="address" label="邮寄地址" width="160"></el-table-column>
-      <el-table-column prop="phone" label="手机号" width="160"></el-table-column>
-      <el-table-column prop="number" label="购买量" width="160"></el-table-column>
-      <el-table-column prop="score" label="使用积分" width="160"></el-table-column>
-      <el-table-column prop="totalScore" label="剩余积分" width="160"></el-table-column>
+      <el-table-column prop="id" label="商品ID"  width="160"></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" width="160"></el-table-column>
+      <el-table-column label="商品图片"  width="100">
+        <template slot-scope="scope">
+　　　　    <img :src="scope.row.goodsPicture" width="80" height="80" />
+　　    </template>
+      </el-table-column>
+      <el-table-column prop="realName" label="兑换人姓名"  width="160"></el-table-column>
+      <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
+      <el-table-column prop="creatTime" label="订单创建时间" width="160"></el-table-column>
+      <el-table-column prop="goodsNumber" label="购买数量" width="160"></el-table-column>
+      <el-table-column prop="sales" label="单个积分" width="160"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <div v-if="scope.row.userState !== 1">已处理</div>
-        <el-button v-if="scope.row.userState === 1"
+          <div v-if="scope.row.orderStatus !== 1">已处理</div>
+        <el-button v-if="scope.row.orderStatus === 1"
           size="mini"
           @click="approved(scope.$index, scope.row)">未处理</el-button>
       </template>
@@ -63,6 +68,20 @@ export default {
     },
     approved(index, item) {
       console.log(index, item)
+      const that = this
+      const http = 'https://api.huijingwuye6688.com/MallOrders/PCUpdateOrderStatus/'+item.id
+        this.$axios.get(http).then(function(res){
+          console.log(res.data.data)
+          if(res.data.success) {
+            that.$message({
+              message: res.data.message,
+              type: 'success'
+            });
+            that.showList()
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
     },
   }
 };

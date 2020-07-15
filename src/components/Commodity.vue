@@ -75,7 +75,7 @@
        <div class="modifyFrom" v-if="showChangeForm">
         <el-form :label-position="labelPosition" label-width="100px" :model="changeformLabelAlign">
             <el-form-item label="序号">
-          <el-input v-model="changeformLabelAlign.goodsId"></el-input>
+          <el-input :disabled="true" v-model="changeformLabelAlign.goodsId"></el-input>
         </el-form-item>
         <el-form-item label="名称">
           <el-input v-model="changeformLabelAlign.goodsName"></el-input>
