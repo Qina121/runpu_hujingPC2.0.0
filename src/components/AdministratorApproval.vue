@@ -158,7 +158,7 @@ export default {
     // 获取后台总表数据
     showTableData() {
       const that = this
-      this.$axios.get('https://api.huijingwuye6688.com/ManageInfo/selectAllManageState').then(function(res){
+      this.$axios.get(that.api+'ManageInfo/selectAllManageState').then(function(res){
         that.tableData = []
         that.tableData = res.data.data
 
@@ -174,7 +174,7 @@ export default {
       that.showChangeForm = true
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
-      const http = 'https://api.huijingwuye6688.com/notice/selectOneById/'+id
+      const http = that.api+'notice/selectOneById/'+id
       this.$axios.get(http).then(function(res){
         //先获取数据回填
         const data = res.data.data
@@ -219,7 +219,7 @@ export default {
       //   landlordId:item.landlordId
       // }
       const id = Number(item.id)
-      const http = 'https://api.huijingwuye6688.com/notice/deleteById/'+id
+      const http = that.api+'notice/deleteById/'+id
       this.$axios.get(http).then(function(res){
         if(res.data.success) {
           that.$message({
@@ -245,7 +245,7 @@ export default {
         views: formName.views,
       }
         // 返回后台添加单条的信息
-        this.$axios.post('https://api.huijingwuye6688.com/notice/insertNotice',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+        this.$axios.post(that.api+'notice/insertNotice',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           console.log(res);
           if(res.data.success) {
             that.$message({
@@ -273,7 +273,7 @@ export default {
             title: formName.title,
             views: formName.views,
         }
-        const updateHttp = 'https://api.huijingwuye6688.com/notice/update'
+        const updateHttp = that.api+'notice/update'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             that.$message({
@@ -300,7 +300,7 @@ export default {
       console.log(index, item)
       const that = this
       // const id = Number(item.id)
-      const http = 'https://api.huijingwuye6688.com/ManageInfo/updateManageInfor/'+2+'/'+item.realName
+      const http = that.api+'ManageInfo/updateManageInfor/'+2+'/'+item.realName
         this.$axios.get(http).then(function(res){
           if(res.data.success) {
             that.$message({

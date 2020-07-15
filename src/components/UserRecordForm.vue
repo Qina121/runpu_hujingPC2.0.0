@@ -236,7 +236,7 @@ export default {
     showTableData() {
       const that = this
       // 新地址https://api.huijingwuye6688.com
-      this.$axios.get('https://api.huijingwuye6688.com/FamilyInfo/selectAllInfo').then(function(res){
+      this.$axios.get(that.api+'FamilyInfo/selectAllInfo').then(function(res){
         that.tableData = []
         that.tableData = res.data.data
       }).catch(function(err){
@@ -250,7 +250,7 @@ export default {
       that.showChangeForm = true
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
-      const http = 'https://api.huijingwuye6688.com/FamilyInfo/selectOne/+'+id+'/'+landlordId
+      const http = that.api+'FamilyInfo/selectOne/+'+id+'/'+landlordId
       this.$axios.get(http).then(function(res){
         //先获取数据回填
         const data = res.data.data
@@ -305,7 +305,7 @@ export default {
       // }
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
-      const http = 'https://api.huijingwuye6688.com/FamilyInfo/delete/'+id+'/'+landlordId
+      const http = that.api+'FamilyInfo/delete/'+id+'/'+landlordId
       this.$axios.get(http).then(function(res){
         if(res.data.success) {
           that.$message({
@@ -367,7 +367,7 @@ export default {
       }
 
         // 返回后台添加单条的信息
-        this.$axios.post('https://api.huijingwuye6688.com/FamilyInfo/insert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+        this.$axios.post(that.api+'FamilyInfo/insert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
 
           if(res.data.success) {
             that.$message({
@@ -429,7 +429,7 @@ export default {
           id: formName.id
         }
 
-        const updateHttp = 'https://api.huijingwuye6688.com/FamilyInfo/update'
+        const updateHttp = that.api+'FamilyInfo/update'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             that.$message({

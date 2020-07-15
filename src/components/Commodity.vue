@@ -150,12 +150,13 @@ export default {
   },
   created () {
     this.showList()
+    console.log(this.api)
   },
   methods: {
     //更新tableData数据
       showList() {
         const that = this
-        const http = 'https://api.huijingwuye6688.com/MallGoods/selectAllMallGoods'
+        const http = that.api+'MallGoods/selectAllMallGoods'
           this.$axios.get(http).then(function(res){
             const data = res.data.data
             that.tableData = data
@@ -184,7 +185,7 @@ export default {
           this.showChangeForm = true
           // 获取单条数据
           const goodsId = Number(item.goodsId)
-          const http = 'https://api.huijingwuye6688.com/MallGoods/selectOneInfo/'+goodsId
+          const http = that.api+'MallGoods/selectOneInfo/'+goodsId
           this.$axios.get(http).then(function(res){
  
             //数据回填
@@ -206,7 +207,7 @@ export default {
         const that = this
         console.log('删除', index, item)
         const goodsId = Number(item.goodsId)
-        const http = 'https://api.huijingwuye6688.com/MallGoods/pcDelete/?goodsId='+goodsId
+        const http = that.api+'MallGoods/pcDelete/?goodsId='+goodsId
         this.$axios.get(http).then(function(res){
           if(res.data.success) {
             that.$message({
@@ -241,7 +242,7 @@ export default {
             return false
           }
         }
-        const updateHttp = 'https://api.huijingwuye6688.com/MallGoods/pcInsert'
+        const updateHttp = that.api+'MallGoods/pcInsert'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             that.$message({
@@ -272,7 +273,7 @@ export default {
             goodsDescribe: form.goodsDescribe,
             goodsPicture: that.uploadFilesOfMall,
         }
-        const updateHttp = 'https://api.huijingwuye6688.com/MallGoods/pdUpdate'
+        const updateHttp = that.api+'MallGoods/pdUpdate'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             console.log(res.data.success)
@@ -306,7 +307,7 @@ export default {
         let _formData = new FormData();//formdata格式
         _formData.append('file', param.file);
           // 返回后台添加单条的信息
-        this.$axios.post('https://api.huijingwuye6688.com/attachment/uploadFilesOfMall',
+        this.$axios.post(that.api+'attachment/uploadFilesOfMall',
         _formData,
         {headers:{'Content-Type':'application/x-www-form-urlencoded'}}
         ).then(function(res){

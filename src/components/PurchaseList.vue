@@ -58,7 +58,7 @@ export default {
   methods: {
     showList() {
       const that = this
-      const http = 'https://api.huijingwuye6688.com/MallOrders/selectAllMallOrders'
+      const http = that.api+'MallOrders/selectAllMallOrders'
         this.$axios.get(http).then(function(res){
           const data = res.data.data
           that.tableData = data
@@ -69,7 +69,7 @@ export default {
     approved(index, item) {
       console.log(index, item)
       const that = this
-      const http = 'https://api.huijingwuye6688.com/MallOrders/PCUpdateOrderStatus/'+item.id
+      const http = that.api+'MallOrders/PCUpdateOrderStatus/'+item.id
         this.$axios.get(http).then(function(res){
           console.log(res.data.data)
           if(res.data.success) {

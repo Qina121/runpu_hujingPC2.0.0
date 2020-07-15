@@ -80,7 +80,7 @@ export default {
         //}
       //});
       //console.log('提交',this.ruleForm.username,this.ruleForm.password)
-      const http = 'https://api.huijingwuye6688.com/userInfo/pcSelectLogin/'+this.ruleForm.username+'/'+this.ruleForm.password
+      const http = that.api+'userInfo/pcSelectLogin/'+this.ruleForm.username+'/'+this.ruleForm.password
       this.$axios.get(http).then(function(res){
         console.log(res.data.data)
         if(res.data.success) {

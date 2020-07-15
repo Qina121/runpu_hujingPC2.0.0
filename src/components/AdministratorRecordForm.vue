@@ -130,7 +130,7 @@ export default {
     // 获取管理员总表数据
     showTableData() {
       const that = this
-      this.$axios.get('https://api.huijingwuye6688.com/ManageInfo/selectAllManageInfo').then(function(res){
+      this.$axios.get(that.api+'ManageInfo/selectAllManageInfo').then(function(res){
         that.tableData = []
         that.tableData = res.data.data
         const obj = {
@@ -200,7 +200,7 @@ export default {
         createTime:'',
       }
       // 将新增加的管理员信息返回给后台数据库
-      this.$axios.post('https://api.huijingwuye6688.com/ManageInfo/insertManage',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+      this.$axios.post(that.api+'ManageInfo/insertManage',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
 
         if(res.data.success) {
           that.$message({
@@ -221,7 +221,7 @@ export default {
       const that = this
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
-      const http = 'https://api.huijingwuye6688.com/ManageInfo/delete/'+id
+      const http = that.api+'ManageInfo/delete/'+id
       this.$axios.get(http).then(function(res){
         if(res.data.success) {
           // rows.splice(index, 1);
@@ -239,7 +239,7 @@ export default {
     changeData(index,item) {
       const that = this
       const id = Number(item.id)
-      const http = 'https://api.huijingwuye6688.com/ManageInfo/selectOne/'+id
+      const http = that.api+'ManageInfo/selectOne/'+id
         this.$axios.get(http).then(function(res){
 
           const data = res.data.data
@@ -273,7 +273,7 @@ export default {
         rfid:formName.rfid,
         createTime:'',
       }
-      const updateHttp = 'https://api.huijingwuye6688.com/ManageInfo/update'
+      const updateHttp = that.api+'ManageInfo/update'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             that.$message({

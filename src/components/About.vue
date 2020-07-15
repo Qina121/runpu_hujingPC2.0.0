@@ -144,7 +144,8 @@ return {
 
       // 获取后台数据
       logoutHandle() {
-        this.$axios.get('https://api.huijingwuye6688.com/FamilyInfo/selectAllInfo').then(function(res){
+        const that = this
+        this.$axios.get(that.api+'FamilyInfo/selectAllInfo').then(function(res){
           console.log(res)
         }).catch(function(err){
           console.log(err)

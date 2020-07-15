@@ -183,7 +183,7 @@ export default {
       that.showChangeForm = true
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
-      const http = 'https://api.huijingwuye6688.com/notice/selectOneById/'+id
+      const http = that.api+'notice/selectOneById/'+id
       
       this.$axios.get(http).then(function(res){
         //先获取数据回填
@@ -227,7 +227,7 @@ export default {
       //   landlordId:item.landlordId
       // }
       const id = Number(item.id)
-      const http = 'https://api.huijingwuye6688.com/vehicleManager/delete/'+id
+      const http = that.api+'vehicleManager/delete/'+id
       this.$axios.get(http).then(function(res){
         if(res.data.success) {
           that.$message({
@@ -244,7 +244,7 @@ export default {
     //查用户ID
     lookId(name,number) {
       const that = this
-      const http = 'https://api.huijingwuye6688.com/vehicleManager/PCSelectOneUserInfo/'+name+'/'+number
+      const http = that.api+'vehicleManager/PCSelectOneUserInfo/'+name+'/'+number
       this.$axios.get(http).then(function(res){
         //先获取数据回填
         console.log(res.data.data)
@@ -289,7 +289,7 @@ export default {
         plateNumber: formName.plateNumber,
       }
         // 返回后台添加单条的信息
-        this.$axios.post('https://api.huijingwuye6688.com/vehicleManager/PCInsert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+        this.$axios.post(that.api+'vehicleManager/PCInsert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           console.log(res);
           if(res.data.success) {
             that.$message({
@@ -317,7 +317,7 @@ export default {
             title: formName.title,
             views: formName.views,
         }
-        const updateHttp = 'https://api.huijingwuye6688.com/notice/update'
+        const updateHttp = that.api+'notice/update'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             that.$message({
@@ -348,7 +348,7 @@ export default {
         userId : item.userId,
         phoneNumber : item.phoneNumber,
       }
-      const http = 'https://api.huijingwuye6688.com/vehicleManager/updateVehicleState/'+2+'/'+item.id+'/'+item.phoneNumber
+      const http = that.api+'vehicleManager/updateVehicleState/'+2+'/'+item.id+'/'+item.phoneNumber
         this.$axios.get(http).then(function(res){
           if(res.data.success) {
             that.$message({
@@ -365,7 +365,7 @@ export default {
     // 获取后台总表数据
     showTableData() {
       const that = this
-      this.$axios.get('https://api.huijingwuye6688.com/vehicleManager/PCSelectAll').then(function(res){
+      this.$axios.get(that.api+'vehicleManager/PCSelectAll').then(function(res){
         that.tableData = []
         that.tableData = res.data.data
 

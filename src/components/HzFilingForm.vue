@@ -183,7 +183,7 @@ export default {
         // 获取后台总表数据
     showTableData() {
       const that = this
-      this.$axios.get('https://api.huijingwuye6688.com/hzInfo/selectAllInfo').then(function(res){
+      this.$axios.get(that.api+'hzInfo/selectAllInfo').then(function(res){
         that.tableData = []
         that.tableData = res.data.data
       }).catch(function(err){
@@ -197,7 +197,7 @@ export default {
       that.showChangeForm = true
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
-      const http = 'https://api.huijingwuye6688.com/hzInfo/selectOne/+'+id+'/'+landlordId
+      const http = that.api+'hzInfo/selectOne/+'+id+'/'+landlordId
       this.$axios.get(http).then(function(res){
         //先获取数据回填
         const data = res.data.data
@@ -243,7 +243,7 @@ export default {
       const that = this
       const id = Number(item.id)
       const landlordId = Number(item.landlordId)
-      const http = 'https://api.huijingwuye6688.com/hzInfo/delete/'+id+'/'+landlordId
+      const http = that.api+'hzInfo/delete/'+id+'/'+landlordId
       this.$axios.get(http).then(function(res){
         if(res.data.success) {
           that.$message({
@@ -300,7 +300,7 @@ export default {
         landlordRFID: formName.landlordRFID
       }
         // 返回后台添加单条的信息
-        this.$axios.post('https://api.huijingwuye6688.com/hzInfo/insert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+        this.$axios.post(that.api+'hzInfo/insert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
 
           if(res.data.success) {
             that.$message({
@@ -358,7 +358,7 @@ export default {
             landlordCarNumber:formName.landlordCarNumber,
             landlordRFID: formName.landlordRFID
         }
-        const updateHttp = 'https://api.huijingwuye6688.com/hzInfo/update'
+        const updateHttp = that.api+'hzInfo/update'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             that.$message({

@@ -5,11 +5,12 @@ import axios from 'axios'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import config from './lib/config/config.js'
 
-Vue.use(ElementUI)
+Vue.use(ElementUI);
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
-
+Vue.use(config);
 new Vue({
   router,
   store,
