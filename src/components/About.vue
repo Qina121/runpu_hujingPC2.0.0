@@ -54,7 +54,7 @@
               <el-menu-item index="/home/AdministratorEventUpload" >事件上传</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="/">
+          <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-tickets"></i>
               <span>非管理员提交</span>
@@ -77,7 +77,7 @@
             <i class="el-icon-s-flag"></i>
             <span slot="title">车辆审批</span>
           </el-menu-item> -->
-          <el-submenu index="/home">
+          <el-submenu index="5">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>备案表的管理</span>
@@ -89,7 +89,16 @@
               <el-menu-item index="/home/HzFilingForm" >户主</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="">
+          <el-submenu index="6">
+            <template slot="title">
+              <i class="el-icon-star-on"></i>
+              <span>小程序用户</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/UsersForm" >用户表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="7">
             <template slot="title">
               <i class="el-icon-s-goods"></i>
               <span>积分商城</span>

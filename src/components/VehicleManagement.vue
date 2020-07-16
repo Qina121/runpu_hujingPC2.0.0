@@ -81,36 +81,6 @@
       </el-form>
     </div>
 
-    <!-- 修改表单 -->
-       <div class="modifyFrom" v-if="showChangeForm">
-        <el-form :label-position="labelPosition" label-width="100px" :model="changeformLabelAlign">
-          <!-- <el-form-item label="用户ID">
-            <el-input v-model="formLabelAlign.landlordId"></el-input>
-          </el-form-item> -->
-          <el-form-item label="发布日期">
-          <el-input v-model="changeformLabelAlign.announceTime"></el-input>
-        </el-form-item>
-        <el-form-item label="内容">
-          <el-input v-model="changeformLabelAlign.content"></el-input>
-        </el-form-item>
-        <el-form-item label="创建日期">
-          <el-input v-model="changeformLabelAlign.createTime"></el-input>
-        </el-form-item>
-        <el-form-item label="标题">
-          <el-input v-model="changeformLabelAlign.title"></el-input>
-        </el-form-item>
-        <el-form-item label="浏览量">
-          <el-input v-model="changeformLabelAlign.views"></el-input>
-        </el-form-item>
-        <el-form-item label="发布者ID">
-          <el-input v-model="changeformLabelAlign.creatorId"></el-input>
-        </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="changeForm(changeformLabelAlign)">立即修改</el-button>
-            <el-button type="primary" @click="closeChangeForm(changeformLabelAlign)">返回</el-button>
-          </el-form-item>
-        </el-form>
-    </div>
   </div>
 </template>
 
@@ -168,13 +138,25 @@ export default {
       labelPosition: 'right',
     };
   },
-  mounted(){
+  created(){
     //初始化数据
     this.showTableData()
   },
   methods: {
     formatter(row, column) {
       return row.address;
+    },
+        // 获取后台总表数据
+    showTableData() {
+      const that = this
+      this.$axios.get(that.api+'vehicleManager/PCSelectAll').then(function(res){
+        that.tableData = []
+        that.tableData = res.data.data
+
+        console.log(that.tableData)
+      }).catch(function(err){
+        console.log(err)
+      })
     },
     //修改表单数据,数据回填
     changeData(index,item) {
@@ -362,18 +344,6 @@ export default {
           console.log(err)
         })
     },
-    // 获取后台总表数据
-    showTableData() {
-      const that = this
-      this.$axios.get(that.api+'vehicleManager/PCSelectAll').then(function(res){
-        that.tableData = []
-        that.tableData = res.data.data
-
-        console.log(that.tableData)
-      }).catch(function(err){
-        console.log(err)
-      })
-    }
   }
 };
 </script>
@@ -394,5 +364,6 @@ export default {
     /* display: none; */
     overflow: auto;
 }
+
 
 </style>

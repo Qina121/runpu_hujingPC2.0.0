@@ -15,7 +15,7 @@
       <el-table-column prop="details" label="描述" width="160"></el-table-column>
       <el-table-column prop="userId" label="用户Id" width="160"></el-table-column>
       <el-table-column prop="score" label="积分" width="160"></el-table-column>
-      <el-table-column label="操作" width="120">
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <!-- <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已审核</div> -->
         <!-- <el-button v-if="scope.row.reapirState === 1"
@@ -24,6 +24,9 @@
           <el-button
           size="mini"
           @click="deleteData(scope.$index, scope.row, tableData)">删除</el-button>
+          <el-button
+          size="mini"
+          @click="showImage(scope.$index, scope.row, tableData)">预览图片</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -86,6 +89,11 @@
           </el-form-item>
         </el-form>
     </div>
+    <!-- 预览图片 -->
+    <div class="showPicture" v-if="showPicture">
+      <img :src="item" style="width:100%" v-for="item in showImgArr"/>
+      <el-button type="primary" style="margin-left: 84%;" @click="closePicture()">返回</el-button>
+    </div>
   </div>
 </template>
 
@@ -100,6 +108,9 @@ export default {
     return {
       showAddForm: false,
       showChangeForm: false,
+      showPicture: false,
+      noticeImageUrl: null,
+      showImgArr:[],
       tableData: [
         // {
         //   date: "2016-05-02",
@@ -313,7 +324,35 @@ export default {
           console.log(err)
         })
     },
+        //预览图
+    showImage(index,item,rows){
+      const that = this
+      that.showImgArr = []
+      if(item.attachment) {
+        const imgIdArr = item.attachment.split(",");
+        console.log(imgIdArr)
+        for(let i=0; i<imgIdArr.length; i++) {
+          this.$axios.get(that.api+'notice/selectPictureById/'+imgIdArr[i]).then(function(res){
+            //单张图
+            // that.noticeImageUrl = res.data.data.fileUrl
+            that.showImgArr.push(res.data.data.fileUrl)
+          
+          }).catch(function(err){
+            console.log(err)
+          })
 
+        }
+         that.showPicture = true
+      } else {
+        that.$message({
+          message: '还没有上传图片',
+          type: 'success'
+        });
+      }
+    },
+    closePicture() {
+      this.showPicture = false
+    },
   }
 };
 </script>
@@ -334,5 +373,20 @@ export default {
     /* display: none; */
     overflow: auto;
 }
-
+.showPicture{
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -280px;
+    width:450px;
+    height:560px;
+    background-color:#fff;
+    padding: 28px 90px;
+    border: 2px solid #999;
+    border-radius: 10px;
+    /* display: none; */
+    overflow: auto;
+    z-index: 99;
+}
 </style>

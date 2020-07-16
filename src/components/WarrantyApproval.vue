@@ -18,7 +18,7 @@
       <el-table-column prop="userId" label="用户ID"  width="160"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
         <el-button v-if="scope.row.reapirState === 1"
@@ -27,6 +27,9 @@
           <el-button
           size="mini"
           @click="deleteData(scope.$index, scope.row, tableData)">删除</el-button>
+          <el-button
+          size="mini"
+          @click="showImage(scope.$index, scope.row, tableData)">预览图片</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -89,6 +92,12 @@
           </el-form-item>
         </el-form>
     </div>
+
+    <!-- 预览图片 -->
+    <div class="showPicture" v-if="showPicture">
+      <img :src="noticeImageUrl" style="width:100%" />
+      <el-button type="primary" style="margin-left: 84%;" @click="closePicture()">返回</el-button>
+    </div>
   </div>
 </template>
 
@@ -103,6 +112,8 @@ export default {
     return {
       showAddForm: false,
       showChangeForm: false,
+      showPicture: false,
+      noticeImageUrl: null,
       tableData: [
         // {
         //   date: "2016-05-02",
@@ -316,6 +327,29 @@ export default {
           console.log(err)
         })
     },
+    //预览图
+    showImage(index,item,rows){
+      const that = this
+      if(item.attachment) {
+        this.$axios.get(that.api+'notice/selectPictureById/'+item.attachment).then(function(res){
+          console.log(res)
+          that.noticeImageUrl = res.data.data.fileUrl
+          console.log( that.noticeImageUrl)
+          that.showPicture = true
+        }).catch(function(err){
+          console.log(err)
+        })
+      } else {
+        that.$message({
+          message: '还没有上传图片',
+          type: 'success'
+        });
+      }
+     
+    },
+      closePicture() {
+      this.showPicture = false
+    },
   }
 };
 </script>
@@ -335,6 +369,22 @@ export default {
     border-radius: 10px;
     /* display: none; */
     overflow: auto;
+}
+.showPicture{
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -280px;
+    width:450px;
+    height:560px;
+    background-color:#fff;
+    padding: 28px 90px;
+    border: 2px solid #999;
+    border-radius: 10px;
+    /* display: none; */
+    overflow: auto;
+    z-index: 99;
 }
 
 </style>

@@ -17,6 +17,7 @@ import PurchaseList from '../components/PurchaseList.vue'
 import AdministratorVehicleMnagement from '../components/AdministratorVehicleMnagement.vue'
 import AdministratorServiceManagement from '../components/AdministratorServiceManagement.vue'
 import AdministratorEventUpload from '../components/AdministratorEventUpload.vue'
+import UsersForm from '../components/UsersForm.vue'
 
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
@@ -117,6 +118,11 @@ VueRouter.prototype.push = function push(location) {
         path: 'AdministratorEventUpload',
         name: 'AdministratorEventUpload',
         component: AdministratorEventUpload,
+      },
+      {
+        path: 'UsersForm',
+        name: 'UsersForm',
+        component: UsersForm,
       },
 
     ]
