@@ -97,7 +97,8 @@
     </div>
     <!-- 预览图片 -->
     <div class="showPicture" v-if="showPicture">
-      <img :src="noticeImageUrl" style="width:100%" />
+      <!-- <img :src="noticeImageUrl" style="width:100%" /> -->
+        <img :src="item" style="width:100%" />
       <el-button type="primary" style="margin-left: 84%;" @click="closePicture()">返回</el-button>
     </div>
   </div>
@@ -116,6 +117,7 @@ export default {
       showChangeForm: false,
       showPicture: false,
       noticeImageUrl: null,
+      showImgArr:[],
       tableData: [
         // {
         //   date: "2016-05-02",
@@ -326,22 +328,28 @@ export default {
     //预览图
     showImage(index,item,rows){
       const that = this
+      that.showImgArr = []
       if(item.attachment) {
-        this.$axios.get(that.api+'notice/selectPictureById/'+item.attachment).then(function(res){
-          console.log(res)
-          that.noticeImageUrl = res.data.data.fileUrl
-          console.log( that.noticeImageUrl)
-          that.showPicture = true
-        }).catch(function(err){
-          console.log(err)
-        })
+        const imgIdArr = item.attachment.split(",");
+        console.log(imgIdArr)
+        for(let i=0; i<imgIdArr.length; i++) {
+          this.$axios.get(that.api+'notice/selectPictureById/'+imgIdArr[i]).then(function(res){
+            //单张图
+            // that.noticeImageUrl = res.data.data.fileUrl
+            that.showImgArr.push(res.data.data.fileUrl)
+          
+          }).catch(function(err){
+            console.log(err)
+          })
+
+        }
+         that.showPicture = true
       } else {
         that.$message({
           message: '还没有上传图片',
           type: 'success'
         });
       }
-     
     },
       closePicture() {
       this.showPicture = false
@@ -383,5 +391,4 @@ export default {
     overflow: auto;
     z-index: 99;
 }
-
 </style>

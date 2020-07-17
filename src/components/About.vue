@@ -60,9 +60,9 @@
               <span>非管理员提交</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/home/WarrantyApproval" >报修审批</el-menu-item>
               <el-menu-item index="/home/RefuseClassification" >垃圾分类</el-menu-item>
-              <el-menu-item index="/home/VehicleManagement" >车辆审批</el-menu-item>
+              <el-menu-item index="/home/WarrantyApproval" >服务申办</el-menu-item>
+              <el-menu-item index="/home/VehicleManagement" >车辆管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <!-- <el-menu-item index="/home/WarrantyApproval">

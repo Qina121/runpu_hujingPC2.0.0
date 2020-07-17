@@ -11,7 +11,7 @@
       <el-table-column prop="userId" label="用户ID"  width="120"></el-table-column>
       <el-table-column prop="applyUser" label="用户"  width="120"></el-table-column>
       <!-- <el-table-column prop="auditState" label="状态" width="160"></el-table-column> -->
-      <el-table-column prop="statrtTime" label="开始时间"  width="160"></el-table-column>
+      <el-table-column prop="createTime" label="开始时间"  width="160"></el-table-column>
       <el-table-column prop="endTime" label="结束时间" width="160"></el-table-column>
       <el-table-column prop="houseNumber" label="家庭号码" width="160"></el-table-column>
       <el-table-column prop="plateNumber" label="车牌" width="160"></el-table-column>
