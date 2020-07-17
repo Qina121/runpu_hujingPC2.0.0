@@ -98,7 +98,7 @@
     <!-- 预览图片 -->
     <div class="showPicture" v-if="showPicture">
       <!-- <img :src="noticeImageUrl" style="width:100%" /> -->
-        <img :src="item" style="width:100%" />
+        <img :src="item" style="width:100%" v-for="item in showImgArr"/>
       <el-button type="primary" style="margin-left: 84%;" @click="closePicture()">返回</el-button>
     </div>
   </div>
