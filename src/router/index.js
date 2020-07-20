@@ -18,6 +18,9 @@ import AdministratorVehicleMnagement from '../components/AdministratorVehicleMna
 import AdministratorServiceManagement from '../components/AdministratorServiceManagement.vue'
 import AdministratorEventUpload from '../components/AdministratorEventUpload.vue'
 import UsersForm from '../components/UsersForm.vue'
+import LiuHeCunUsers from '../components/LiuHeCunUsers.vue'
+import XinLiCunUsers from '../components/XinLiCunUsers.vue'
+import MaCunUsers from '../components/MaCunUsers.vue'
 
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
@@ -123,6 +126,21 @@ VueRouter.prototype.push = function push(location) {
         path: 'UsersForm',
         name: 'UsersForm',
         component: UsersForm,
+      },
+      {
+        path: 'LiuHeCunUsers',
+        name: 'LiuHeCunUsers',
+        component: LiuHeCunUsers,
+      },
+      {
+        path: 'XinLiCunUsers',
+        name: 'XinLiCunUsers',
+        component: XinLiCunUsers,
+      },
+      {
+        path: 'MaCunUsers',
+        name: 'MaCunUsers',
+        component: MaCunUsers,
       },
 
     ]

@@ -95,7 +95,11 @@
               <span>小程序用户</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/home/UsersForm" >用户表</el-menu-item>
+              <!-- UsersForm获取的是所有的用户--现在要分为三个村的用户 -->
+              <!-- <el-menu-item index="/home/UsersForm" >用户表</el-menu-item> -->
+              <el-menu-item index="/home/XinLiCunUsers">新立村用户</el-menu-item>
+              <el-menu-item index="/home/LiuHeCunUsers">六合村用户</el-menu-item>
+              <el-menu-item index="/home/MaCunUsers">马村用户</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="7">
