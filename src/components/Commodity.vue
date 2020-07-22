@@ -10,6 +10,10 @@
       border  height="800"
     >
       <el-table-column prop="goodsId" label="序号"  width="160"></el-table-column>
+      <!-- <el-table-column prop="goodsItems" label="商品类型" width="160"></el-table-column> -->
+      <el-table-column  label="商品类型" width="160">
+        <template slot-scope="scope">{{scope.row.goodsItems=== '1'? '食品': scope.row.goodsItems=== '2'? '衣服':scope.row.goodsItems=== '3'? '家用日常': ''}}</template>
+      </el-table-column>
       <el-table-column prop="goodsName" label="商品名称"  width="160"></el-table-column>
       <el-table-column label="商品图片"  width="100">
         <template slot-scope="scope">
@@ -39,6 +43,13 @@
        <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
         <el-form-item label="序号">
           <el-input v-model="formLabelAlign.goodsId"></el-input>
+        </el-form-item>
+        <el-form-item label="商品类型">
+          <el-select v-model="formLabelAlign.goodsItems" placeholder="请选择商品类型" style="width:100%">
+            <el-option label="食品" value="1"></el-option>
+            <el-option label="衣服" value="2"></el-option>
+            <el-option label="家用日常" value="3"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="名称">
           <el-input v-model="formLabelAlign.goodsName"></el-input>
@@ -76,6 +87,13 @@
         <el-form :label-position="labelPosition" label-width="100px" :model="changeformLabelAlign">
             <el-form-item label="序号">
           <el-input :disabled="true" v-model="changeformLabelAlign.goodsId"></el-input>
+        </el-form-item>
+        <el-form-item label="商品类型">
+          <el-select v-model="changeformLabelAlign.goodsItems" placeholder="请选择商品类型" style="width:100%">
+            <el-option label="食品" value="1"></el-option>
+            <el-option label="衣服" value="2"></el-option>
+            <el-option label="家用日常" value="3"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="名称">
           <el-input v-model="changeformLabelAlign.goodsName"></el-input>
@@ -196,6 +214,7 @@ export default {
               goodsInventory:res.data.data.goodsInventory,
               goodsDescribe: res.data.data.goodsDescribe,
               goodsPicture: res.data.data.goodsPicture,
+              goodsItems:res.data.data.goodsItems
             }
             that.imageUrl = res.data.data.goodsPicture
           }).catch(function(err){
@@ -223,6 +242,7 @@ export default {
       
       //立即添加数据
       submitAddForm(form) {
+        console.log(form.goodsItems)
         const that = this
         const obj = {
           goodsId: form.goodsId,
@@ -230,7 +250,8 @@ export default {
           goodsPrice:form.goodsPrice,
           goodsInventory:form.goodsInventory,
           goodsDescribe:form.goodsDescribe,
-          goodsPicture:that.uploadFilesOfMall
+          goodsPicture:that.uploadFilesOfMall,
+          goodsItems:form.goodsItems
         }
         //序号不可以重复
         for(let i = 0; i<that.tableData.length; i++) {
@@ -272,6 +293,7 @@ export default {
             goodsInventory:form.goodsInventory,
             goodsDescribe: form.goodsDescribe,
             goodsPicture: that.uploadFilesOfMall,
+            goodsItems:form.goodsItems
         }
         const updateHttp = that.api+'MallGoods/pdUpdate'
         that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){

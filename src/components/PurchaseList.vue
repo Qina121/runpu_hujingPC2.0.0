@@ -1,6 +1,10 @@
 <template>
   <div class="Allbox">
    <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
+   <div>
+     <input class="searchOrder" type="text" name="" id="" placeholder="请输入订单ID" v-model="searchOrderId"/> 
+  	  <button class="searchButton" @click="searchOrder">搜索</button>
+   </div>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -23,10 +27,10 @@
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <div v-if="scope.row.orderStatus !== 1">已处理</div>
+          <div v-if="scope.row.orderStatus !== 1">已审核</div>
         <el-button v-if="scope.row.orderStatus === 1"
           size="mini"
-          @click="approved(scope.$index, scope.row)">未处理</el-button>
+          @click="approved(scope.$index, scope.row)">未审核</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -38,6 +42,7 @@ export default {
   name: "PurchaseList",
   data() {
     return {
+      searchOrderId: '',
       tableData: [
         {
             id: "1",
@@ -83,10 +88,49 @@ export default {
           console.log(err)
         })
     },
+    searchOrder() {
+      const that = this
+      if(that.searchOrderId) {
+      const http = that.api+'MallOrders/selectOne/'+ that.searchOrderId
+        this.$axios.get(http).then(function(res){
+          console.log(res)
+          that.tableData = [];
+          that.tableData.push(res.data.data)
+        }).catch(function(err){
+          console.log(err)
+        })
+      } else{
+        that.showList()
+      }
+
+    },
+
   }
 };
 </script>
 <style scoped>
+input, button{
+    border:0;outline:none;
+}
+.searchOrder{
+  width: 300px;
+  height: 30px;
+  border: 1px solid #5a8afb;
+  border-radius: 5px;
+  line-height: 30px;
+  margin: 20px;
+  padding-left: 10px;
+
+}
+.searchButton{
+  width: 50px;
+  height: 30px;
+  background: #5a8afb;
+  color: #fff;
+  border-radius: 5px;
+  border: 1px solid #5a8afb;
+}
+
 
 
 </style>
