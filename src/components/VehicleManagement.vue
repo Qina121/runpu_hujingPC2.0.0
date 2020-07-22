@@ -7,20 +7,20 @@
       show-header
       border  height="800"
     >
-     <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
-      <el-table-column prop="userId" label="用户ID"  width="120"></el-table-column>
-      <el-table-column prop="applyUser" label="用户"  width="120"></el-table-column>
+     <el-table-column :resizable="false" prop="createTime" label="创建时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userId" label="用户ID"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="applyUser" label="用户"  width="120"></el-table-column>
       <!-- <el-table-column prop="auditState" label="状态" width="160"></el-table-column> -->
-      <el-table-column prop="createTime" label="开始时间"  width="160"></el-table-column>
-      <el-table-column prop="endTime" label="结束时间" width="160"></el-table-column>
-      <el-table-column prop="houseNumber" label="家庭号码" width="160"></el-table-column>
-      <el-table-column prop="plateNumber" label="车牌" width="160"></el-table-column>
-     <el-table-column prop="applyDesc" label="描述"  width="120"></el-table-column>
-      <el-table-column prop="phoneNumber" label="手机号"  width="250"></el-table-column>
+      <el-table-column :resizable="false" prop="createTime" label="开始时间"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="endTime" label="结束时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="houseNumber" label="家庭号码" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="plateNumber" label="车牌" width="160"></el-table-column>
+     <el-table-column :resizable="false" prop="applyDesc" label="描述"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号"  width="250"></el-table-column>
       
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <!-- {{scope.row.auditState=== 1? '未审核': '已审核'}} -->
           <div v-if="scope.row.auditState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>

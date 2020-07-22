@@ -7,19 +7,19 @@
       show-header
       border  height="800"
     >
-      <el-table-column prop="landlordName" label="户主姓名"  width="120"></el-table-column>
-      <el-table-column prop="town" label="镇"  width="120"></el-table-column>
-      <el-table-column prop="phoneNumber" label="户主手机号" width="160"></el-table-column>
-      <el-table-column prop="village" label="村" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="landlordName" label="户主姓名"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="town" label="镇"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="户主手机号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="village" label="村" width="160"></el-table-column>
       <!-- <el-table-column prop="landlordRelationship" label="与业主关系" width="160"></el-table-column> -->
-      <el-table-column prop="landlordId" label="户主ID" width="160"></el-table-column>
-      <el-table-column prop="landlordCarNumber" label="户主车牌号" width="160"></el-table-column>
-      <el-table-column prop="landlordBH" label="户主房屋编号" width="160"></el-table-column>
-      <el-table-column prop="id" label="ID"  width="160"></el-table-column>
-      <el-table-column prop="commonAddress" label="地址"  width="250"></el-table-column>
+      <el-table-column :resizable="false" prop="landlordId" label="户主ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="landlordCarNumber" label="户主车牌号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="landlordBH" label="户主房屋编号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="id" label="ID"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="commonAddress" label="地址"  width="250"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
         <el-button
           size="mini"

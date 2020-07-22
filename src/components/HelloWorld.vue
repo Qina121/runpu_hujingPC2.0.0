@@ -85,7 +85,9 @@ export default {
         console.log(res.data.data)
         if(res.data.success) {
           console.log('调整')
+          localStorage.setItem('userInfo', JSON.stringify(res.data.data));
           that.$router.push({ name: "About" });
+          
         } else {
           return false;
         }

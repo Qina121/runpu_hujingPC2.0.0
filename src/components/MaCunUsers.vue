@@ -7,26 +7,26 @@
       show-header
       border  height="800"
     >
-        <el-table-column prop="id" label="ID"  width="120"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
-      <el-table-column prop="realName" label="用户姓名"  width="120"></el-table-column>
-      <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
-      <el-table-column prop="carNumber" label="车牌号" width="160"></el-table-column>
-      <el-table-column prop="town" label="镇"  width="160"></el-table-column>
-      <el-table-column prop="village" label="村"  width="250"></el-table-column>
-      <el-table-column prop="commonAddress" label="详细地址"  width="120"></el-table-column>
-      <el-table-column prop="rfid" label="RFID" width="160"></el-table-column>
-      <el-table-column prop="totalScore" label="总积分" width="160"></el-table-column>
+        <el-table-column :resizable="false" prop="id" label="ID"  width="120"></el-table-column>
+        <el-table-column :resizable="false" prop="createTime" label="创建时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="realName" label="用户姓名"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="carNumber" label="车牌号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="town" label="镇"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="village" label="村"  width="250"></el-table-column>
+      <el-table-column :resizable="false" prop="commonAddress" label="详细地址"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="rfid" label="RFID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="totalScore" label="总积分" width="160"></el-table-column>
       <!-- <el-table-column prop="carnumber" label="车牌号" width="160"></el-table-column> -->
       <!-- <el-table-column prop="creattime" label="创建日期" width="160"></el-table-column> -->
-      <el-table-column prop="userOwnerId" label="户主ID" width="160"></el-table-column>
-       <el-table-column  label="用户状态" width="160">
+      <el-table-column :resizable="false" prop="userOwnerId" label="户主ID" width="160"></el-table-column>
+       <el-table-column :resizable="false"  label="用户状态" width="160">
         <template slot-scope="scope">{{scope.row.userState=== 1? '未审批': '已审批'}}</template>
       </el-table-column>
-      <el-table-column  label="用户类型" width="160">
+      <el-table-column  :resizable="false" label="用户类型" width="160">
         <template slot-scope="scope">{{scope.row.userType=== 1? '管理员': scope.row.userType=== 2? '业主':scope.row.userType=== 3? '住户':scope.row.userType=== 4? '租户':''}}</template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <!-- <el-button
           size="mini"

@@ -7,19 +7,19 @@
       show-header
       border  height="800"
     >
-      <el-table-column prop="userName" label="姓名"  width="120"></el-table-column>
-      <el-table-column prop="sex" label="性别"  width="120"></el-table-column>
-      <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
-      <el-table-column prop="idCard" label="身份证号" width="160"></el-table-column>
-      <el-table-column prop="landlordRelationship" label="与业主关系" width="160"></el-table-column>
-      <el-table-column prop="rfid" label="RFID编码" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userName" label="姓名"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="sex" label="性别"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="idCard" label="身份证号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="landlordRelationship" label="与业主关系" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="rfid" label="RFID编码" width="160"></el-table-column>
       <!-- <el-table-column prop="carnumber" label="车牌号" width="160"></el-table-column> -->
       <!-- <el-table-column prop="creattime" label="创建日期" width="160"></el-table-column> -->
-      <el-table-column prop="registered" label="注册状态"  width="160"></el-table-column>
-      <el-table-column prop="userAddress" label="地址"  width="250"></el-table-column>
-      <el-table-column  label="重点关照" width="160">
+      <el-table-column :resizable="false" prop="registered" label="注册状态"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userAddress" label="地址"  width="250"></el-table-column>
+      <el-table-column  :resizable="false" label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 1? '未关照': '关照'}}</template></el-table-column>
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <!-- <el-button
           size="mini"

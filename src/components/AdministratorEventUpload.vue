@@ -8,13 +8,13 @@
       show-header
       border  height="800"
     >
-      <el-table-column prop="location" label="地址"  width="160"></el-table-column>
-      <el-table-column prop="createTime" label="创建日期"  width="160"></el-table-column>
-      <el-table-column prop="id" label="ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="location" label="地址"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="createTime" label="创建日期"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="id" label="ID" width="160"></el-table-column>
       <!-- <el-table-column prop="attachment" label="附件" width="160"></el-table-column> -->
-      <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
-      <el-table-column prop="eventDescription" label="事件描述" width="160"></el-table-column>
-      <el-table-column prop="uploadId" label="上传ID"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="eventDescription" label="事件描述" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="uploadId" label="上传ID"  width="160"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
       <el-table-column label="操作" width="200">

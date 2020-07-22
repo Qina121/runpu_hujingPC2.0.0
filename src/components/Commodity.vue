@@ -9,24 +9,24 @@
       show-header
       border  height="800"
     >
-      <el-table-column prop="goodsId" label="序号"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="goodsId" label="序号"  width="160"></el-table-column>
       <!-- <el-table-column prop="goodsItems" label="商品类型" width="160"></el-table-column> -->
-      <el-table-column  label="商品类型" width="160">
+      <el-table-column  :resizable="false" label="商品类型" width="160">
         <template slot-scope="scope">{{scope.row.goodsItems=== '1'? '食品': scope.row.goodsItems=== '2'? '衣服':scope.row.goodsItems=== '3'? '家用日常': ''}}</template>
       </el-table-column>
-      <el-table-column prop="goodsName" label="商品名称"  width="160"></el-table-column>
-      <el-table-column label="商品图片"  width="100">
+      <el-table-column :resizable="false" prop="goodsName" label="商品名称"  width="160"></el-table-column>
+      <el-table-column :resizable="false" label="商品图片"  width="100">
         <template slot-scope="scope">
 　　　　    <img :src="scope.row.goodsPicture" width="80" height="80" />
 　　    </template>
       </el-table-column>
-      <el-table-column prop="goodsPrice" label="价钱" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="goodsPrice" label="价钱" width="160"></el-table-column>
       <!-- <el-table-column prop="redeemPoints" label="兑换积分" width="160"></el-table-column> -->
-      <el-table-column prop="goodsInventory" label="库存" width="160"></el-table-column>
-      <el-table-column prop="goodsDescribe" label="描述" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="goodsInventory" label="库存" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="goodsDescribe" label="描述" width="160"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column label="操作" width="200">
+      <el-table-column :resizable="false" label="操作" width="200">
         <template slot-scope="scope">
         <el-button
           size="mini"

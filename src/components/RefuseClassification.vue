@@ -7,20 +7,20 @@
       show-header
       border  height="800"
     >
-     <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
-      <el-table-column prop="details" label="信息描述"  width="120"></el-table-column>
-      <el-table-column prop="location" label="地址"  width="120"></el-table-column>
-      <el-table-column prop="realName" label="用户名字" width="160"></el-table-column>
+     <el-table-column :resizable="false" prop="createTime" label="创建时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="details" label="信息描述"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="location" label="地址"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="realName" label="用户名字" width="160"></el-table-column>
       <!-- <el-table-column prop="endTime" label="结束时间" width="160"></el-table-column> -->
       <!-- <el-table-column prop="houseNumber" label="家庭号码" width="160"></el-table-column> -->
       <!-- <el-table-column prop="plateNumber" label="台数" width="160"></el-table-column> -->
       <!-- <el-table-column prop="creattime" label="创建日期" width="160"></el-table-column> -->
-      <el-table-column prop="userId" label="用户ID"  width="160"></el-table-column>
-      <el-table-column prop="phoneNumber" label="手机号"  width="250"></el-table-column>
-      <el-table-column prop="id" label="ID"  width="250"></el-table-column>
+      <el-table-column :resizable="false" prop="userId" label="用户ID"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号"  width="250"></el-table-column>
+      <el-table-column :resizable="false" prop="id" label="ID"  width="250"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column  label="操作" width="280">
+      <el-table-column  :resizable="false" label="操作" width="280">
         <template slot-scope="scope">
           <!-- {{scope.row.auditState=== 1? '未审核': '已审核'}} -->
           <div v-if="scope.row.auditState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>

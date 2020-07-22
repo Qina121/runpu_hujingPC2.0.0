@@ -10,17 +10,17 @@
       <!-- <el-table-column prop="commonAddress" label="地址"  width="120"></el-table-column> -->
       <!-- <el-table-column prop="createTime" label="创建日期"  width="120"></el-table-column> -->
       <!-- <el-table-column prop="headImage" label="头像" width="160"></el-table-column> -->
-      <el-table-column prop="id" label="ID" width="160"></el-table-column>
-      <el-table-column prop="realName" label="名字" width="160"></el-table-column>
-      <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
-      <el-table-column prop="totalScore" label="totalScore" width="160"></el-table-column>
-      <el-table-column prop="frid" label="FRID" width="160"></el-table-column>
-      <el-table-column prop="userOwnerId" label="用户ID" width="160"></el-table-column>
-      <el-table-column prop="userType" label="用户类型" width="160"></el-table-column>
-      <el-table-column prop="userState" label="用户状态"  width="250"></el-table-column>
+      <el-table-column :resizable="false" prop="id" label="ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="realName" label="名字" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="totalScore" label="totalScore" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="frid" label="FRID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userOwnerId" label="用户ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userType" label="用户类型" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userState" label="用户状态"  width="250"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <!-- {{scope.row.auditState=== 1? '未审核': '已审核'}} -->
           <div v-if="scope.row.userState !== 1">已处理</div>

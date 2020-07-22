@@ -7,17 +7,17 @@
       show-header
       border  height="800"
     >
-      <el-table-column prop="address" label="地址"  width="120"></el-table-column>
-      <el-table-column prop="applyId" label="applyId"  width="120"></el-table-column>
-      <el-table-column prop="id" label="ID" width="160"></el-table-column>
-      <el-table-column prop="userName" label="名字" width="160"></el-table-column>
-      <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
-      <el-table-column prop="startTime" label="开始时间" width="160"></el-table-column>
-      <el-table-column prop="endTime" label="结束时间" width="160"></el-table-column>
-      <el-table-column prop="parkingTime" label="停放时间" width="160"></el-table-column>
-      <el-table-column prop="details" label="描述" width="160"></el-table-column>
-      <el-table-column prop="rfidInfo" label="rfid信息"  width="250"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column :resizable="false" prop="address" label="地址"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="applyId" label="applyId"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="id" label="ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userName" label="名字" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="startTime" label="开始时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="endTime" label="结束时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="parkingTime" label="停放时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="details" label="描述" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="rfidInfo" label="rfid信息"  width="250"></el-table-column>
+      <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <!-- <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已审核</div> -->
         <!-- <el-button v-if="scope.row.reapirState === 1"

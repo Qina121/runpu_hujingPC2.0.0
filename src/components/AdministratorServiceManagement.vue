@@ -10,12 +10,12 @@
     >
       <!-- <el-table-column prop="address" label="地址"  width="120"></el-table-column> -->
       <!-- <el-table-column prop="createTime" label="创建日期"  width="120"></el-table-column> -->
-      <el-table-column prop="id" label="ID" width="160"></el-table-column>
-      <el-table-column prop="rfidInfo" label="rfid描述" width="160"></el-table-column>
-      <el-table-column prop="details" label="描述" width="160"></el-table-column>
-      <el-table-column prop="userId" label="用户Id" width="160"></el-table-column>
-      <el-table-column prop="score" label="积分" width="160"></el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column :resizable="false" prop="id" label="ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="rfidInfo" label="rfid描述" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="details" label="描述" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="userId" label="用户Id" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="score" label="积分" width="160"></el-table-column>
+      <el-table-column :resizable="false" label="操作" width="200">
         <template slot-scope="scope">
           <!-- <div v-if="scope.row.reapirState !== 1" style="display:inline-block;margin-right:10px;">已审核</div> -->
         <!-- <el-button v-if="scope.row.reapirState === 1"

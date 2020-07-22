@@ -1,25 +1,39 @@
 <template>
  <div class="Allbox">
-   <el-button type="primary" @click="addData()">添加数据</el-button>
+   <div class="buttonBox">
+    <el-button type="primary" @click="addData()">添加数据</el-button>
+    <el-button type="primary" @click="addCarousel()">将已选择的复选框内容添加到小程序轮播图</el-button>
+   </div>
+   
     <el-table
       :data="tableData"
+      :header-cell-class-name="cellclass"
       style="width: 100%"
       show-header
       border  height="800"
+       @selection-change="handleSelectionChange"
     >
-      <el-table-column prop="announceTime" label="发布日期"  width="120"></el-table-column>
-      <el-table-column prop="content" label="内容"  width="120"></el-table-column>
-      <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
-      <el-table-column prop="creatorId" label="创建者ID" width="160"></el-table-column>
-      <el-table-column prop="creatorName" label="创建者姓名" width="160"></el-table-column>
-      <el-table-column prop="id" label="ID" width="160"></el-table-column>
-      <!-- <el-table-column prop="carnumber" label="车牌号" width="160"></el-table-column> -->
-      <!-- <el-table-column prop="creattime" label="创建日期" width="160"></el-table-column> -->
-      <el-table-column prop="title" label="标题"  width="160"></el-table-column>
-      <el-table-column prop="views" label="浏览量"  width="250"></el-table-column>
+    <el-table-column
+      type="selection"
+      width="50">
+    </el-table-column>
+    <!-- :show-overflow-tooltip="true" -->
+         <!-- :row-style="{height:'100px'}"
+      :cell-style="{height:'100px'}" -->
+      <el-table-column :resizable="false" prop="title" label="标题"  width="160"></el-table-column>
+      <el-table-column :resizable="false" label="内容"  width="300">
+        <template slot-scope="scope">
+          <div class="concentStyle">{{scope.row.content}}</div>
+　　    </template>
+      </el-table-column>
+      <el-table-column :resizable="false" prop="announceTime" label="发布日期"  width="120"></el-table-column>      <el-table-column :resizable="false" prop="createTime" label="创建时间" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="creatorId" label="创建者ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="creatorName" label="创建者姓名" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="id" label="ID" width="160"></el-table-column>     
+      <el-table-column :resizable="false" prop="views" label="浏览量"  width="150"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
-      <el-table-column fixed="right"  label="操作" width="280">
+      <el-table-column :resizable="false"  fixed="right"  label="操作" width="280">
         <template slot-scope="scope">
         <el-button
           size="mini"
@@ -37,25 +51,26 @@
     <!-- 添加表单 -->
     <div class="modifyFrom" v-if="showAddForm">
        <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
-        <el-form-item label="发布日期">
-          <!-- <el-input v-model="formLabelAlign.announceTime"></el-input> -->
-           <el-date-picker style="width:100%" v-model="formLabelAlign.announceTime" type="date" placeholder="选择发布日期"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="内容">
-          <el-input v-model="formLabelAlign.content"></el-input>
-        </el-form-item>
-        <el-form-item label="创建日期">
-          <!-- <el-input v-model="formLabelAlign.createTime"></el-input> -->
+         <el-form-item label="创建日期">
            <el-date-picker style="width:100%" v-model="formLabelAlign.createTime" type="date" placeholder="选择创建日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="发布日期">
+           <el-date-picker style="width:100%" v-model="formLabelAlign.announceTime" type="date" placeholder="选择发布日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="标题">
           <el-input v-model="formLabelAlign.title"></el-input>
         </el-form-item>
+        <el-form-item label="内容">
+          <el-input v-model="formLabelAlign.content"></el-input>
+        </el-form-item>
         <!-- <el-form-item label="浏览量">
           <el-input v-model="formLabelAlign.views"></el-input>
         </el-form-item> -->
-        <el-form-item label="发布者ID">
-          <el-input v-model="formLabelAlign.creatorId"></el-input>
+        <el-form-item label="创建者姓名">
+          <el-input :disabled="true" v-model="userInfo.realName"></el-input>
+        </el-form-item>
+        <el-form-item label="创建者ID">
+          <el-input :disabled="true" v-model="userInfo.id"></el-input>
         </el-form-item>
         <!-- 新添加一个上传通知里的图片按钮 -->
         <el-form-item>
@@ -80,28 +95,23 @@
     <!-- 修改表单 -->
     <div class="modifyFrom" v-if="showChangeForm">
         <el-form :label-position="labelPosition" label-width="100px" :model="changeformLabelAlign">
-          <!-- <el-form-item label="用户ID">
-            <el-input v-model="formLabelAlign.landlordId"></el-input>
-          </el-form-item> -->
-          <el-form-item label="发布日期">
-          <!-- <el-input v-model="changeformLabelAlign.announceTime"></el-input> -->
-          <el-date-picker style="width:100%" v-model="changeformLabelAlign.announceTime" type="date" placeholder="选择发布日期"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="内容">
-          <el-input v-model="changeformLabelAlign.content"></el-input>
-        </el-form-item>
         <el-form-item label="创建日期">
-          <!-- <el-input v-model="changeformLabelAlign.createTime"></el-input> -->
           <el-date-picker style="width:100%" v-model="changeformLabelAlign.createTime" type="date" placeholder="选择创建日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="发布日期">
+          <el-date-picker style="width:100%" v-model="changeformLabelAlign.announceTime" type="date" placeholder="选择发布日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="标题">
           <el-input v-model="changeformLabelAlign.title"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="浏览量">
-          <el-input v-model="changeformLabelAlign.views"></el-input>
-        </el-form-item> -->
-        <el-form-item label="发布者ID">
-          <el-input v-model="changeformLabelAlign.creatorId"></el-input>
+        <el-form-item label="内容">
+          <el-input v-model="changeformLabelAlign.content"></el-input>
+        </el-form-item>
+        <el-form-item label="创建者姓名">
+          <el-input :disabled="true" v-model="userInfo.realName"></el-input>
+        </el-form-item>
+        <el-form-item label="创建者ID">
+          <el-input :disabled="true" v-model="userInfo.id"></el-input>
         </el-form-item>
         <!-- 新添加一个上传通知里的图片按钮 -->
         <el-form-item>
@@ -140,24 +150,52 @@ export default {
   },
   data() {
     return {
+      userInfo:{},
       showAddForm: false,
       showChangeForm: false,
       imageUrl: null,
       noticeImageId: null,
       noticeImageUrl: null,
       showPicture: false,
+      // 选择的轮播图信息
+      multipleSelection: [],
       tableData: [
-        // {
-        //   date: "2016-05-02",
-        //   userName: "王小虎",
-        //   userAddress: "上海市普陀区金沙江路 1518 弄",
-        //   relationship:'父子',
-        //   carnumber: '京A52057',
-        //   creattime: '2020-06-12',
-        //   usertype: '是',
-        //   phoneNumber:'',
-        //   sex: ''
-        // },
+        {
+          date: "2016-05-02",
+          userName: "王小虎",
+          userAddress: "上海市普陀区金沙江路 1518 弄",
+          relationship:'父子',
+          carnumber: '京A52057',
+          creattime: '2020-06-12',
+          usertype: '是',
+          phoneNumber:'',
+          sex: '',
+          content: '商量个事立即登录受奖罚临时冻结斐林试剂东方嘉盛傅雷家书砥砺奋进塑料袋解放路时代峻峰来得及发链接砥砺奋进第三方精灵盛典杰弗里斯积分,商量个事立即登录受奖罚临时冻结斐林试剂东方嘉盛傅雷家书砥砺奋进塑料袋解放路时代峻峰来得及发链接砥砺奋进第三方精灵盛典杰弗里斯积分'
+        },
+        {
+          date: "2016-05-02",
+          userName: "王小虎",
+          userAddress: "上海市普陀区金沙江路 1518 弄",
+          relationship:'父子',
+          carnumber: '京A52057',
+          creattime: '2020-06-12',
+          usertype: '是',
+          phoneNumber:'',
+          sex: '',
+          content: '商量个事立即登录受奖罚临时冻结斐林试剂东方嘉盛傅雷家书砥砺奋进塑料袋解放路时代峻峰来得及发链接砥砺奋进第三方精灵盛典杰弗里斯积分,商量个事立即登录受奖罚临时冻结斐林试剂东方嘉盛傅雷家书砥砺奋进塑料袋解放路时代峻峰来得及发链接砥砺奋进第三方精灵盛典杰弗里斯积分'
+        },
+        {
+          date: "2016-05-02",
+          userName: "王小虎",
+          userAddress: "上海市普陀区金沙江路 1518 弄",
+          relationship:'父子',
+          carnumber: '京A52057',
+          creattime: '2020-06-12',
+          usertype: '是',
+          phoneNumber:'',
+          sex: '',
+          content: '商量个事立即登录受奖罚临时冻结斐林试剂东方嘉盛傅雷家书砥砺奋进塑料袋解放路时代峻峰来得及发链接砥砺奋进第三方精灵盛典杰弗里斯积分,商量个事立即登录受奖罚临时冻结斐林试剂东方嘉盛傅雷家书砥砺奋进塑料袋解放路时代峻峰来得及发链接砥砺奋进第三方精灵盛典杰弗里斯积分'
+        },
         
       ],
       formLabelAlign: {
@@ -190,10 +228,32 @@ export default {
   created(){
     //初始化数据
     this.showTableData()
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    console.log(this.userInfo)
   },
   methods: {
     formatter(row, column) {
       return row.address;
+    },
+    //判断如果是表头则不显示复选框
+    cellclass(row){
+      if(row.columnIndex===0){
+        return 'DisabledSelection'
+      }
+    },
+    toggleSelection(rows) {
+      console.log(rows)
+      // if (rows) {
+      //   rows.forEach(row => {
+      //     this.$refs.multipleTable.toggleRowSelection(row);
+      //   });
+      // } else {
+      //   this.$refs.multipleTable.clearSelection();
+      // }
+    },
+    handleSelectionChange(val) {
+      console.log(val)
+      this.multipleSelection = val;
     },
     // 获取后台总表数据
     showTableData() {
@@ -201,7 +261,6 @@ export default {
       this.$axios.get(that.api+'notice/selectAllNotice').then(function(res){
         that.tableData = []
         that.tableData = res.data.data
-
         console.log(that.tableData)
       }).catch(function(err){
         console.log(err)
@@ -236,18 +295,15 @@ export default {
     addData() {
       const that = this
       that.formLabelAlign= {
-        name: null,
-        number: null,
-        type: null,
-        carId:null,
-        frid:null,
-        address:null,
-        zctype:null,
-        gz:null,
-        id:null,
-        landlordRelationshipNumber:null,
-        sex: null,
-        landlordId:null
+        announceTime: null,
+        content: null,
+        createTime: null,
+        creatorId: null,
+        creatorName: null,
+        id: null,
+        title: null,
+        views: null,
+        attachment: null
       },
       that.showAddForm = true
     },
@@ -318,10 +374,11 @@ export default {
         announceTime: aTime,
         content: formName.content,
         createTime: cTime,
-        creatorId: formName.creatorId,
+        creatorId: that.userInfo.id,
         title: formName.title,
         views: 0,
-        attachment: uploadPictures
+        attachment: uploadPictures,
+        creatorName: that.userInfo.realName,
       }
         // 返回后台添加单条的信息
         this.$axios.post(that.api+'notice/insertNotice',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
@@ -361,8 +418,8 @@ export default {
             announceTime: aTime,
             content: formName.content,
             createTime: cTime,
-            creatorId: formName.creatorId,
-            creatorName: formName.creatorName,
+            creatorId: that.userInfo.id,
+            creatorName: that.userInfo.realName,
             id: formName.id,
             title: formName.title,
             views: 0,
@@ -440,12 +497,57 @@ export default {
       let d = new Date(date)
       let datetime=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       return datetime
+    },
+    //将已选择的复选框添加到轮播图
+    addCarousel(){
+      const that = this
+      let arr = []
+      if(that.multipleSelection.length > 0) {
+        for(let i = 0; i<that.multipleSelection.length; i++) {
+          if(!that.multipleSelection[i].attachment) {
+            that.$message({
+              message: '标题为'+that.multipleSelection[i].title+'的公告没有图片无法设为轮播图',
+              type: 'error'
+            });
+            return false
+          }
+        }
+        for(let i = 0; i<that.multipleSelection.length; i++) {
+          arr.push(that.multipleSelection[i].id)
+        }
+      } else {
+        that.$message({
+          message: '请先选择要添加到轮播图的信息',
+          type: 'error'
+        });
+      }
+      const str = JSON.stringify(arr).replace(/[\[\]]/g,"");
+  
+      const obj = {
+        noticeAsCarousel: str,
+        operatorId:that.userInfo.id,
+        operatorName:that.userInfo.realName
+      }
+        this.$axios.post(that.api+'updateOneNoticeAsCarousel',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+          console.log(res);
+          if(res.data.success) {
+            that.$message({
+              message: res.data.message,
+              type: 'success'
+            });
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
     }
   }
 };
 </script>
 
 <style scoped>
+.buttonBox{
+  padding: 20px;
+}
 .modifyFrom{
     position: absolute;
     left: 50%;
@@ -502,5 +604,18 @@ export default {
     height: 178px;
     display: block;
   }
-
+  .concentStyle{
+    height: 120px;
+    overflow: auto;
+  }
+  .el-table /deep/.DisabledSelection .cell .el-checkbox__inner{
+    display:none;
+    position:relative;
+  }
+  .el-table /deep/.DisabledSelection .cell:before{
+    content:"选择";
+    position:absolute;
+    padding-left: 10px;
+  }
+/* .el-tooltip__popper{max-width:200px} */
 </style>
