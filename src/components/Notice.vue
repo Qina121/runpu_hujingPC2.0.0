@@ -6,6 +6,7 @@
    </div>
    
     <el-table
+     ref="multipleTable"
       :data="tableData"
       :header-cell-class-name="cellclass"
       style="width: 100%"
@@ -241,15 +242,8 @@ export default {
         return 'DisabledSelection'
       }
     },
-    toggleSelection(rows) {
-      console.log(rows)
-      // if (rows) {
-      //   rows.forEach(row => {
-      //     this.$refs.multipleTable.toggleRowSelection(row);
-      //   });
-      // } else {
-      //   this.$refs.multipleTable.clearSelection();
-      // }
+    toggleSelection() { //清空复选框
+        this.$refs.multipleTable.clearSelection();
     },
     handleSelectionChange(val) {
       console.log(val)
@@ -521,6 +515,13 @@ export default {
           type: 'error'
         });
       }
+      if(that.multipleSelection.length > 5) {
+        that.$message({
+          message: '添加为轮播图的信息最多为5条',
+          type: 'error'
+        });
+        return false
+      }
       const str = JSON.stringify(arr).replace(/[\[\]]/g,"");
   
       const obj = {
@@ -528,13 +529,15 @@ export default {
         operatorId:that.userInfo.id,
         operatorName:that.userInfo.realName
       }
-        this.$axios.post(that.api+'updateOneNoticeAsCarousel',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+      this.$axios.get(that.api+'NoticeAsCarousel/updateOneNoticeAsCarousel/'+str+'/'+that.userInfo.id+'/'+that.userInfo.realName).then(function(res){
+        // this.$axios.post(that.api+'NoticeAsCarousel/updateOneNoticeAsCarousel',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           console.log(res);
           if(res.data.success) {
             that.$message({
               message: res.data.message,
               type: 'success'
             });
+            that.toggleSelection() //上传后清空所有选中
           }
         }).catch(function(err){
           console.log(err)

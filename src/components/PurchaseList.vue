@@ -1,9 +1,9 @@
 <template>
   <div class="Allbox">
    <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
-   <div>
-     <input class="searchOrder" type="text" name="" id="" placeholder="请输入订单ID" v-model="searchOrderId"/> 
-  	  <button class="searchButton" @click="searchOrder">搜索</button>
+   <div class="searchOrder">
+     <el-input v-model="searchOrderId" placeholder="请输入订单ID"></el-input>
+  	  <el-button type="primary" @click="searchOrder">搜索</el-button>
    </div>
     <el-table
       :data="tableData"
@@ -109,28 +109,16 @@ export default {
 };
 </script>
 <style scoped>
-input, button{
-    border:0;outline:none;
-}
 .searchOrder{
-  width: 300px;
+  width: 350px;
   height: 30px;
-  border: 1px solid #5a8afb;
   border-radius: 5px;
   line-height: 30px;
   margin: 20px;
-  padding-left: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
 }
-.searchButton{
-  width: 50px;
-  height: 30px;
-  background: #5a8afb;
-  color: #fff;
-  border-radius: 5px;
-  border: 1px solid #5a8afb;
-}
-
-
-
 </style>

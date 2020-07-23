@@ -85,8 +85,8 @@
             <el-menu-item-group>
               <el-menu-item index="/home/AdministratorRecordForm" >管理员备案</el-menu-item>
               <!-- <el-menu-item index="/home/OtherRecordForm" >户本</el-menu-item> -->
-              <el-menu-item index="/home/UserRecordForm" >用户</el-menu-item>
-              <el-menu-item index="/home/HzFilingForm" >户主</el-menu-item>
+              <!-- <el-menu-item index="/home/UserRecordForm" >用户</el-menu-item> -->
+              <!-- <el-menu-item index="/home/HzFilingForm" >户主</el-menu-item> -->
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="6">
