@@ -63,6 +63,7 @@
               <el-menu-item index="/home/RefuseClassification" >垃圾分类</el-menu-item>
               <el-menu-item index="/home/WarrantyApproval" >服务申办</el-menu-item>
               <el-menu-item index="/home/VehicleManagement" >车辆管理</el-menu-item>
+              <el-menu-item index="/home/LicensePlateTimeliness" >RFID车辆管理时效性</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <!-- <el-menu-item index="/home/WarrantyApproval">

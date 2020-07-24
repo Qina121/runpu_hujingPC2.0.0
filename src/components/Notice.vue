@@ -569,19 +569,19 @@ export default {
 }
 .showPicture{
   position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -250px;
-    margin-top: -280px;
-    width:450px;
-    height:560px;
-    background-color:#fff;
-    padding: 28px 90px;
-    border: 2px solid #999;
-    border-radius: 10px;
-    /* display: none; */
-    overflow: auto;
-    z-index: 99;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -280px;
+  width:450px;
+  height:560px;
+  background-color:#fff;
+  padding: 28px 90px;
+  border: 2px solid #999;
+  border-radius: 10px;
+  /* display: none; */
+  overflow: auto;
+  z-index: 99;
 }
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;

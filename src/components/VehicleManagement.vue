@@ -11,13 +11,13 @@
       <el-table-column :resizable="false" prop="userId" label="用户ID"  width="120"></el-table-column>
       <el-table-column :resizable="false" prop="applyUser" label="用户"  width="120"></el-table-column>
       <!-- <el-table-column prop="auditState" label="状态" width="160"></el-table-column> -->
+      <el-table-column :resizable="false" prop="phoneNumber" label="手机号"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="houseNumber" label="家庭住址" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="plateNumber" label="车牌" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="rfidCar" label="RFID" width="160"></el-table-column>
       <el-table-column :resizable="false" prop="createTime" label="开始时间"  width="160"></el-table-column>
       <el-table-column :resizable="false" prop="endTime" label="结束时间" width="160"></el-table-column>
-      <el-table-column :resizable="false" prop="houseNumber" label="家庭号码" width="160"></el-table-column>
-      <el-table-column :resizable="false" prop="plateNumber" label="车牌" width="160"></el-table-column>
-     <el-table-column :resizable="false" prop="applyDesc" label="描述"  width="120"></el-table-column>
-      <el-table-column :resizable="false" prop="phoneNumber" label="手机号"  width="250"></el-table-column>
-      
+      <el-table-column :resizable="false" prop="applyDesc" label="描述"  width="250"></el-table-column>
       <!-- <el-table-column  label="重点关照" width="160">
       <template slot-scope="scope">{{scope.row.focusAttention=== 0? '不是': '是'}}</template></el-table-column> -->
       <el-table-column :resizable="false" fixed="right" label="操作" width="200">
@@ -81,6 +81,19 @@
       </el-form>
     </div>
 
+
+    <!-- 处理时填写rifd -->
+    <div class="examineShow" v-if="examineShow">
+        <div>
+          <span>请填写RFID</span>
+           <el-input v-model="rfid"></el-input>
+           <div class="examineBtn">
+             <el-button type="primary"  @click="examine()">确定</el-button>
+             <el-button type="primary"  @click="closeExamine()">返回</el-button>
+           </div>
+        </div>
+    </div>
+
   </div>
 </template>
 
@@ -95,20 +108,9 @@ export default {
     return {
       showAddForm: false,
       showChangeForm: false,
-      tableData: [
-        // {
-        //   date: "2016-05-02",
-        //   userName: "王小虎",
-        //   userAddress: "上海市普陀区金沙江路 1518 弄",
-        //   relationship:'父子',
-        //   carnumber: '京A52057',
-        //   creattime: '2020-06-12',
-        //   usertype: '是',
-        //   phoneNumber:'',
-        //   sex: ''
-        // },
-        
-      ],
+      rfid:'',
+      examineShow: false,
+      tableData: [],
       formLabelAlign: {
         userId: null,
         applyUser: null,
@@ -121,20 +123,21 @@ export default {
         createTime: null,
         plateNumber: null,
       },
-      changeformLabelAlign: {
-        name: null,
-        number: null,
-        type: null,
-        carId:null,
-        frid:null,
-        address:null,
-        zctype:null,
-        gz:null,
-        id:null,
-        landlordRelationshipNumber:null,
-        sex: null,
-        landlordId:null
-      },
+      userInfo : null,
+      // changeformLabelAlign: {
+      //   name: null,
+      //   number: null,
+      //   type: null,
+      //   carId:null,
+      //   frid:null,
+      //   address:null,
+      //   zctype:null,
+      //   gz:null,
+      //   id:null,
+      //   landlordRelationshipNumber:null,
+      //   sex: null,
+      //   landlordId:null
+      // },
       labelPosition: 'right',
     };
   },
@@ -152,38 +155,33 @@ export default {
       this.$axios.get(that.api+'vehicleManager/PCSelectAll').then(function(res){
         that.tableData = []
         that.tableData = res.data.data
-
-        console.log(that.tableData)
       }).catch(function(err){
         console.log(err)
       })
     },
     //修改表单数据,数据回填
-    changeData(index,item) {
-      const that = this
-      //显示表单
-      that.showChangeForm = true
-      const id = Number(item.id)
-      const landlordId = Number(item.landlordId)
-      const http = that.api+'notice/selectOneById/'+id
-      
-      this.$axios.get(http).then(function(res){
-        //先获取数据回填
-        const data = res.data.data
-        that.changeformLabelAlign =  {
-            announceTime: data.announceTime,
-            content: data.content,
-            createTime: data.createTime,
-            creatorId: data.creatorId,
-            creatorName: data.creatorName,
-            id: data.id,
-            title: data.title,
-            views: data.views,
-        }
-      }).catch(function(err){
-        console.log(err)
-      })
-    },
+    // changeData(index,item) {
+    //   const that = this
+    //   that.showChangeForm = true
+    //   const id = Number(item.id)
+    //   const landlordId = Number(item.landlordId)
+    //   const http = that.api+'notice/selectOneById/'+id
+    //   this.$axios.get(http).then(function(res){
+    //     const data = res.data.data
+    //     that.changeformLabelAlign =  {
+    //         announceTime: data.announceTime,
+    //         content: data.content,
+    //         createTime: data.createTime,
+    //         creatorId: data.creatorId,
+    //         creatorName: data.creatorName,
+    //         id: data.id,
+    //         title: data.title,
+    //         views: data.views,
+    //     }
+    //   }).catch(function(err){
+    //     console.log(err)
+    //   })
+    // },
     //添加表单数据
     addData() {
       const that = this
@@ -204,10 +202,6 @@ export default {
     //删除表单数据
     deleteData(index,item,rows) {
       const that = this
-      // const obj = {
-      //   id:item.id,
-      //   landlordId:item.landlordId
-      // }
       const id = Number(item.id)
       const http = that.api+'vehicleManager/delete/'+id
       this.$axios.get(http).then(function(res){
@@ -217,7 +211,6 @@ export default {
             type: 'success'
           });
           that.showTableData()
-          
         }
       }).catch(function(err){
         console.log(err)
@@ -229,7 +222,6 @@ export default {
       const http = that.api+'vehicleManager/PCSelectOneUserInfo/'+name+'/'+number
       this.$axios.get(http).then(function(res){
         //先获取数据回填
-        console.log(res.data.data)
         that.formLabelAlign.userId = res.data.data
       }).catch(function(err){
         console.log(err)
@@ -287,63 +279,86 @@ export default {
         })
     },
     // 修改单条信息并提交
-    changeForm(formName) {
-        const that = this
-        const obj = {
-            announceTime: formName.announceTime,
-            content: formName.content,
-            createTime: formName.createTime,
-            creatorId: formName.creatorId,
-            creatorName: formName.creatorName,
-            id: formName.id,
-            title: formName.title,
-            views: formName.views,
-        }
-        const updateHttp = that.api+'notice/update'
-        that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
-          if(res.data.success) {
-            that.$message({
-              message: res.data.message,
-              type: 'success'
-            });
-            that.closeChangeForm()
-            that.showTableData() 
-          }
-        }).catch(function(err){
-          console.log(err)
-        })
-    },
+    // changeForm(formName) {
+    //     const that = this
+    //     const obj = {
+    //         announceTime: formName.announceTime,
+    //         content: formName.content,
+    //         createTime: formName.createTime,
+    //         creatorId: formName.creatorId,
+    //         creatorName: formName.creatorName,
+    //         id: formName.id,
+    //         title: formName.title,
+    //         views: formName.views,
+    //     }
+    //     const updateHttp = that.api+'notice/update'
+    //     that.$axios.post(updateHttp,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+    //       if(res.data.success) {
+    //         that.$message({
+    //           message: res.data.message,
+    //           type: 'success'
+    //         });
+    //         that.closeChangeForm()
+    //         that.showTableData() 
+    //       }
+    //     }).catch(function(err){
+    //       console.log(err)
+    //     })
+    // },
     //关闭添加窗口
     closeAddForm() {
       this.showAddForm = false
     },
-    //关闭数据更改惶窗口
-    closeChangeForm() {
-      this.showChangeForm = false
-    },
+    //关闭数据更改窗口
+    // closeChangeForm() {
+    //   this.showChangeForm = false
+    // },
     //车辆通过审核
     approved(index,item) {
       console.log(index, item)
       const that = this
-      const obj = {
-        auditState : 2,
-        userId : item.userId,
-        phoneNumber : item.phoneNumber,
-      }
-      const http = that.api+'vehicleManager/updateVehicleState/'+2+'/'+item.id+'/'+item.phoneNumber
+      that.examineShow = true
+      that.userInfo = item
+      // return
+      // const obj = {
+      //   auditState : 2,
+      //   userId : item.userId,
+      //   phoneNumber : item.phoneNumber,
+      // }
+      // const http = that.api+'vehicleManager/updateVehicleState/'+2+'/'+item.id+'/'+item.phoneNumber
+      //   this.$axios.get(http).then(function(res){
+      //     if(res.data.success) {
+      //       that.$message({
+      //         message: res.data.message,
+      //         type: 'success'
+      //       });
+      //       // that.closeChangeForm()
+      //       that.showTableData() 
+      //     }
+      //   }).catch(function(err){
+      //     console.log(err)
+      //   })
+    },
+    closeExamine() {
+      this.examineShow = false
+    },
+    //添加rfid并通过审核
+    examine() {
+      const that = this
+      const http = that.api+'vehicleManager/updateVehicleState/'+that.userInfo.id+'/'+that.userInfo.userId+'/'+that.userInfo.phoneNumber+'/'+that.userInfo.plateNumber+'/'+that.rfid
         this.$axios.get(http).then(function(res){
           if(res.data.success) {
             that.$message({
               message: res.data.message,
               type: 'success'
             });
-            that.closeChangeForm()
+            that.closeExamine()
             that.showTableData() 
           }
         }).catch(function(err){
           console.log(err)
         })
-    },
+    }
   }
 };
 </script>
@@ -364,6 +379,28 @@ export default {
     /* display: none; */
     overflow: auto;
 }
-
+.examineShow{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -150px;
+  margin-top: -200px;
+  width:300px;
+  /* height:80px; */
+  background-color:#fff;
+  padding: 28px 90px;
+  border: 2px solid #999;
+  border-radius: 10px;
+  overflow: auto;
+  z-index: 99;
+}
+.examineBtn{
+  display: flex;
+  justify-content:space-between;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  
+}
 
 </style>

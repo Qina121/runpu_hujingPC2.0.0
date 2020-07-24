@@ -21,6 +21,7 @@ import UsersForm from '../components/UsersForm.vue'
 import LiuHeCunUsers from '../components/LiuHeCunUsers.vue'
 import XinLiCunUsers from '../components/XinLiCunUsers.vue'
 import MaCunUsers from '../components/MaCunUsers.vue'
+import LicensePlateTimeliness from '../components/LicensePlateTimeliness.vue'
 
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
@@ -141,6 +142,11 @@ VueRouter.prototype.push = function push(location) {
         path: 'MaCunUsers',
         name: 'MaCunUsers',
         component: MaCunUsers,
+      },
+      {
+        path: 'LicensePlateTimeliness',
+        name: 'LicensePlateTimeliness',
+        component: LicensePlateTimeliness,
       },
 
     ]
