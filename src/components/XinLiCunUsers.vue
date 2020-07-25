@@ -221,6 +221,7 @@ export default {
     // 获取后台总表数据
     showTableData() {
       const that = this
+      // const rLoading = that.openLoading();
       this.$axios.get(that.api+'userInfo/selectAllInfo').then(function(res){
         that.tableData = []
         for(let i = 0; i<res.data.data.length; i++) {
@@ -228,7 +229,9 @@ export default {
                 that.tableData.push(res.data.data[i])
             }
         }
-        // that.tableData = res.data.data
+        // if(that.tableData.length>0) {
+        //   rLoading.close();
+        // }
       }).catch(function(err){
         console.log(err)
       })

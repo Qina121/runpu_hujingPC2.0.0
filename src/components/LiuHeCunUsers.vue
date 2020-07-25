@@ -163,10 +163,15 @@ export default {
       this.$axios.get(that.api+'userInfo/selectAllInfo').then(function(res){
         that.tableData = []
         for(let i = 0; i<res.data.data.length; i++) {
-            if(res.data.data[i].village == '六合村') {
-                that.tableData.push(res.data.data[i])
+            // if(res.data.data[i].village == '六合庄') {
+            //     that.tableData.push(res.data.data[i])
+            // }
+            if(res.data.data[i].village.indexOf('六合庄') != -1) {
+              // console.log(res.data.data[i].village.indexOf('六合庄'))
+              that.tableData.push(res.data.data[i])
             }
         }
+        console.log(that.tableData.length)
         // that.tableData = res.data.data
       }).catch(function(err){
         console.log(err)
