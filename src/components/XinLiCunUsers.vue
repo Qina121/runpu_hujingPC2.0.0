@@ -130,7 +130,7 @@
           <el-input v-model="changeformLabelAlign.totalScore"></el-input>
         </el-form-item>
         <el-form-item label="户主ID">
-          <el-input v-model="changeformLabelAlign.userOwnerId"></el-input>
+          <el-input :disabled="true" v-model="changeformLabelAlign.userOwnerId"></el-input>
         </el-form-item>
         <el-form-item label="用户状态">
           <el-select :disabled="true" v-model="changeformLabelAlign.userState" placeholder="请选择用户状态">
