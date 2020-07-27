@@ -1,6 +1,11 @@
 <template>
  <div class="Allbox">
-   <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
+   <div class="searchOrder">
+     <el-input v-model="searchName" placeholder="请输入姓名"></el-input>
+  	<el-button type="primary" @click="searchUser">搜索</el-button>
+    <el-button type="primary" @click="addData()">添加新立村用户</el-button>
+   </div>
+  
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -28,9 +33,10 @@
       </el-table-column>
       <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
-          <!-- <el-button
+           <div v-if="scope.row.userState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
+        <el-button v-if="scope.row.userState === 1"
           size="mini"
-          @click="pay(scope.$index, scope.row)">缴费</el-button> -->
+          @click="approved(scope.$index, scope.row)">未处理</el-button>
         <el-button
           size="mini"
           @click="changeData(scope.$index, scope.row)">更改</el-button>
@@ -42,7 +48,7 @@
     </el-table>
 
     <!-- 添加表单 -->
-    <!-- <div class="modifyFrom" v-if="showAddForm">
+    <div class="modifyFrom" v-if="showAddForm">
        <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign" :rules="formLabelAlignrules">
         <el-form-item label="户主ID" prop="landlordId">
           <el-input v-model="formLabelAlign.landlordId"></el-input>
@@ -94,7 +100,7 @@
           <el-button type="primary" @click="closeAddForm(formLabelAlign)">返回</el-button>
         </el-form-item>
       </el-form>
-    </div> -->
+    </div>
 
     <!-- 修改表单 -->
        <div class="modifyFrom" v-if="showChangeForm">
@@ -167,6 +173,7 @@ export default {
   },
   data() {
     return {
+      searchName: '',
       showAddForm: false,
       showChangeForm: false,
       tableData: [],
@@ -410,10 +417,41 @@ export default {
     closeChangeForm() {
       this.showChangeForm = false
     },
+    //后台审核用户
+    approved(index,item) {
+      console.log(index, item)
+      const that = this
+      const http = that.api+'userInfo/updateUserInfoApplicationStatus?id='+item.id+'&&userState='+2+'&&realName='+item.realName+'&&phoneNumber='+item.phoneNumber
+        this.$axios.get(http).then(function(res){
+          if(res.data.success) {
+            that.$message({
+              message: res.data.message,
+              type: 'success'
+            });
 
-    // pay() {
-    //   console.log('缴费')
-    // }
+            that.showTableData() 
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
+    },
+    // 搜索
+    searchUser() {
+      const that = this
+      if(that.searchName) {
+      const http = that.api+'userInfo/fuzzySelectUserInfoByRealName?realName='+ that.searchName
+        this.$axios.get(http).then(function(res){
+          console.log(res)
+          that.tableData = [];
+          that.tableData.push(res.data.data)
+        }).catch(function(err){
+          console.log(err)
+        })
+      } else{
+        that.showList()
+      }
+
+    },
   } 
 };
 </script>
@@ -434,6 +472,18 @@ export default {
     /* display: none; */
     overflow: auto;
     z-index: 99;
+}
+.searchOrder{
+  width: 350px;
+  height: 30px;
+  border-radius: 5px;
+  line-height: 30px;
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
 }
 
 

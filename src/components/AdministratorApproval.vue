@@ -295,12 +295,12 @@ export default {
     closeChangeForm() {
       this.showChangeForm = false
     },
-    //报修通过审核
+    //管理员审批
     approved(index,item) {
       console.log(index, item)
       const that = this
       // const id = Number(item.id)
-      const http = that.api+'ManageInfo/updateManageInfor/'+2+'/'+item.realName
+      const http = that.api+'ManageInfo/updateManageInfor/'+2+'/'+item.realName+'/'+item.phoneNumber
         this.$axios.get(http).then(function(res){
           if(res.data.success) {
             that.$message({

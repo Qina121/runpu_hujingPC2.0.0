@@ -1,6 +1,6 @@
 <template>
  <div class="Allbox">
-   <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
+   <el-button type="primary" @click="addData()">添加六合庄村用户</el-button>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -26,6 +26,10 @@
       </el-table-column>
       <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
+          <div v-if="scope.row.userState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
+        <el-button v-if="scope.row.userState === 1"
+          size="mini"
+          @click="approved(scope.$index, scope.row)">未处理</el-button>
         <el-button
           size="mini"
           @click="changeData(scope.$index, scope.row)">更改</el-button>
@@ -35,6 +39,62 @@
       </template>
       </el-table-column>
     </el-table>
+
+
+    <!-- 添加表单 -->
+    <div class="modifyFrom" v-if="showAddForm">
+       <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign" :rules="formLabelAlignrules">
+        <el-form-item label="户主ID" prop="landlordId">
+          <el-input v-model="formLabelAlign.landlordId"></el-input>
+        </el-form-item>
+        <el-form-item label="户主名字">
+          <el-input v-model="formLabelAlign.landlordName"></el-input>
+        </el-form-item>
+        <el-form-item label="用户关系编号">
+          <el-input v-model="formLabelAlign.landlordRelationshipNumber"></el-input>
+        </el-form-item>
+        <el-form-item label="与业主关系">
+          <el-input v-model="formLabelAlign.landlordRelationship"></el-input>
+        </el-form-item>
+        <el-form-item label="是否在册">
+          <el-input v-model="formLabelAlign.registered"></el-input>
+        </el-form-item>
+        <el-form-item label="用户姓名">
+          <el-input v-model="formLabelAlign.userName"></el-input>
+        </el-form-item>
+        <el-form-item label="用户性别">
+          <el-input v-model="formLabelAlign.sex"></el-input>
+        </el-form-item>
+        <el-form-item label="地址">
+          <el-input v-model="formLabelAlign.userAddress"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证">
+          <el-input v-model="formLabelAlign.idCard"></el-input>
+        </el-form-item>
+        <el-form-item label="工作地址">
+          <el-input v-model="formLabelAlign.workAddress"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号">
+          <el-input v-model="formLabelAlign.phoneNumber"></el-input>
+        </el-form-item>     
+        <el-form-item label="FRID编号">
+          <el-input v-model="formLabelAlign.rfid"></el-input>
+        </el-form-item>
+        <el-form-item label="用户车牌">
+          <el-input v-model="formLabelAlign.carNumber"></el-input>
+        </el-form-item>
+        <el-form-item label="重点关照">
+          <el-select v-model="formLabelAlign.focusAttention" placeholder="请选择是否需要重点关照">
+            <el-option label="否" value="1"></el-option>
+            <el-option label="是" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitAddForm(formLabelAlign)">立即添加</el-button>
+          <el-button type="primary" @click="closeAddForm(formLabelAlign)">返回</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <!-- 修改表单 -->
        <div class="modifyFrom" v-if="showChangeForm">
         <el-form :label-position="labelPosition" label-width="100px" :model="changeformLabelAlign">
@@ -351,10 +411,24 @@ export default {
     closeChangeForm() {
       this.showChangeForm = false
     },
+    //后台审核用户
+    approved(index,item) {
+      console.log(index, item)
+      const that = this
+      const http = that.api+'userInfo/updateUserInfoApplicationStatus?id='+item.id+'&&userState='+2+'&&realName='+item.realName+'&&phoneNumber='+item.phoneNumber
+        this.$axios.get(http).then(function(res){
+          if(res.data.success) {
+            that.$message({
+              message: res.data.message,
+              type: 'success'
+            });
 
-    // pay() {
-    //   console.log('缴费')
-    // }
+            that.showTableData() 
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
+    },
   } 
 };
 </script>

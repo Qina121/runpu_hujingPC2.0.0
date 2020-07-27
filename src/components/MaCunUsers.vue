@@ -1,6 +1,6 @@
 <template>
  <div class="Allbox">
-   <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
+   <el-button type="primary" @click="addData()">添加马村用户</el-button>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -28,9 +28,10 @@
       </el-table-column>
       <el-table-column :resizable="false" fixed="right" label="操作" width="200">
         <template slot-scope="scope">
-          <!-- <el-button
+          <div v-if="scope.row.userState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
+        <el-button v-if="scope.row.userState === 1"
           size="mini"
-          @click="pay(scope.$index, scope.row)">缴费</el-button> -->
+          @click="approved(scope.$index, scope.row)">未处理</el-button>
         <el-button
           size="mini"
           @click="changeData(scope.$index, scope.row)">更改</el-button>
@@ -42,7 +43,7 @@
     </el-table>
 
     <!-- 添加表单 -->
-    <!-- <div class="modifyFrom" v-if="showAddForm">
+    <div class="modifyFrom" v-if="showAddForm">
        <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign" :rules="formLabelAlignrules">
         <el-form-item label="户主ID" prop="landlordId">
           <el-input v-model="formLabelAlign.landlordId"></el-input>
@@ -94,7 +95,7 @@
           <el-button type="primary" @click="closeAddForm(formLabelAlign)">返回</el-button>
         </el-form-item>
       </el-form>
-    </div> -->
+    </div>
 
     <!-- 修改表单 -->
        <div class="modifyFrom" v-if="showChangeForm">
@@ -407,10 +408,24 @@ export default {
     closeChangeForm() {
       this.showChangeForm = false
     },
+    //后台审核用户
+    approved(index,item) {
+      console.log(index, item)
+      const that = this
+      const http = that.api+'userInfo/updateUserInfoApplicationStatus?id='+item.id+'&&userState='+2+'&&realName='+item.realName+'&&phoneNumber='+item.phoneNumber
+        this.$axios.get(http).then(function(res){
+          if(res.data.success) {
+            that.$message({
+              message: res.data.message,
+              type: 'success'
+            });
 
-    // pay() {
-    //   console.log('缴费')
-    // }
+            that.showTableData() 
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
+    },
   } 
 };
 </script>
