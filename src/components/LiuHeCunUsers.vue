@@ -1,6 +1,10 @@
 <template>
  <div class="Allbox">
-   <el-button type="primary" @click="addData()">添加六合庄村用户</el-button>
+   <div class="searchOrder">
+    <el-input v-model="searchName" placeholder="请输入姓名"></el-input>
+  	<el-button type="primary" @click="searchUser">搜索</el-button>
+    <el-button type="primary" @click="addData()">添加六合庄村用户</el-button>
+   </div>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -12,19 +16,19 @@
       <el-table-column :resizable="false" prop="realName" label="用户姓名"  width="120"></el-table-column>
       <el-table-column :resizable="false" prop="phoneNumber" label="手机号" width="160"></el-table-column>
       <el-table-column :resizable="false" prop="carNumber" label="车牌号" width="160"></el-table-column>
-      <el-table-column :resizable="false" prop="town" label="镇"  width="160"></el-table-column>
-      <el-table-column :resizable="false" prop="village" label="村"  width="250"></el-table-column>
-      <el-table-column :resizable="false" prop="commonAddress" label="详细地址"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="town" label="镇"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="village" label="村"  width="120"></el-table-column>
+      <el-table-column :resizable="false" prop="commonAddress" label="详细地址"  width="160"></el-table-column>
       <el-table-column :resizable="false" prop="rfid" label="RFID" width="160"></el-table-column>
       <el-table-column :resizable="false" prop="totalScore" label="总积分" width="160"></el-table-column>
       <el-table-column :resizable="false" prop="userOwnerId" label="户主ID" width="160"></el-table-column>
-       <el-table-column  :resizable="false" label="用户状态" width="160">
+       <!-- <el-table-column  :resizable="false" label="用户状态" width="160">
         <template slot-scope="scope">{{scope.row.userState=== 1? '未审批': '已审批'}}</template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column  :resizable="false" label="用户类型" width="160">
         <template slot-scope="scope">{{scope.row.userType=== 1? '管理员': scope.row.userType=== 2? '业主':scope.row.userType=== 3? '住户':scope.row.userType=== 4? '租户':''}}</template>
       </el-table-column>
-      <el-table-column :resizable="false" fixed="right" label="操作" width="200">
+      <el-table-column :resizable="false" fixed="right" label="操作" width="240">
         <template slot-scope="scope">
           <div v-if="scope.row.userState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
         <el-button v-if="scope.row.userState === 1"
@@ -43,51 +47,50 @@
 
     <!-- 添加表单 -->
     <div class="modifyFrom" v-if="showAddForm">
-       <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign" :rules="formLabelAlignrules">
-        <el-form-item label="户主ID" prop="landlordId">
-          <el-input v-model="formLabelAlign.landlordId"></el-input>
-        </el-form-item>
-        <el-form-item label="户主名字">
-          <el-input v-model="formLabelAlign.landlordName"></el-input>
-        </el-form-item>
-        <el-form-item label="用户关系编号">
-          <el-input v-model="formLabelAlign.landlordRelationshipNumber"></el-input>
-        </el-form-item>
-        <el-form-item label="与业主关系">
-          <el-input v-model="formLabelAlign.landlordRelationship"></el-input>
-        </el-form-item>
-        <el-form-item label="是否在册">
-          <el-input v-model="formLabelAlign.registered"></el-input>
-        </el-form-item>
-        <el-form-item label="用户姓名">
-          <el-input v-model="formLabelAlign.userName"></el-input>
-        </el-form-item>
-        <el-form-item label="用户性别">
-          <el-input v-model="formLabelAlign.sex"></el-input>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input v-model="formLabelAlign.userAddress"></el-input>
-        </el-form-item>
-        <el-form-item label="身份证">
-          <el-input v-model="formLabelAlign.idCard"></el-input>
-        </el-form-item>
-        <el-form-item label="工作地址">
-          <el-input v-model="formLabelAlign.workAddress"></el-input>
+       <el-form :label-position="labelPosition" label-width="120px" :model="formLabelAlign" :rules="formLabelAlignrules">
+        <!-- <el-form-item label="用户所属户主ID" prop="userOwnerId">
+          <el-input v-model="formLabelAlign.userOwnerId"></el-input>
+        </el-form-item> -->
+        <el-form-item label="姓名" prop="landlordId">
+          <el-input v-model="formLabelAlign.realName"></el-input>
         </el-form-item>
         <el-form-item label="手机号">
           <el-input v-model="formLabelAlign.phoneNumber"></el-input>
-        </el-form-item>     
+        </el-form-item>
+        <el-form-item label="镇">
+          <el-input :disabled="true" v-model="formLabelAlign.town"></el-input>
+        </el-form-item>
+        <el-form-item label="村">
+          <el-input :disabled="true" v-model="formLabelAlign.village"></el-input>
+        </el-form-item>
+        <el-form-item label="常用地址">
+          <el-input v-model="formLabelAlign.commonAddress"></el-input>
+        </el-form-item>
         <el-form-item label="FRID编号">
           <el-input v-model="formLabelAlign.rfid"></el-input>
         </el-form-item>
         <el-form-item label="用户车牌">
           <el-input v-model="formLabelAlign.carNumber"></el-input>
         </el-form-item>
-        <el-form-item label="重点关照">
-          <el-select v-model="formLabelAlign.focusAttention" placeholder="请选择是否需要重点关照">
-            <el-option label="否" value="1"></el-option>
-            <el-option label="是" value="2"></el-option>
+        <el-form-item label="用户状态">
+          <el-select v-model="formLabelAlign.userState" placeholder="请选择用户状态">
+            <el-option label="未处理" value="1"></el-option>
+            <el-option label="已处理" value="2"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="用户类型">
+          <el-select v-model="formLabelAlign.userType" placeholder="请选择用户类型" @change="selectType">
+            <el-option label="管理员" value="1"></el-option>
+            <el-option label="业主" value="2"></el-option>
+            <el-option label="住户" value="3"></el-option>
+            <el-option label="租户" value="4"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="户主姓名">
+          <el-input :disabled="finllInfo" v-model="formLabelAlign.userOwerName"></el-input>
+        </el-form-item>
+        <el-form-item label="户主手机号">
+          <el-input :disabled="finllInfo" v-model="formLabelAlign.userOwerPhoneNumber"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitAddForm(formLabelAlign)">立即添加</el-button>
@@ -166,6 +169,9 @@ export default {
   },
   data() {
     return {
+      searchName: '',
+      finllInfo: false,
+      userTypeNum: '',
       showAddForm: false,
       showChangeForm: false,
       tableData: [],
@@ -223,16 +229,14 @@ export default {
       this.$axios.get(that.api+'userInfo/selectAllInfo').then(function(res){
         that.tableData = []
         for(let i = 0; i<res.data.data.length; i++) {
-            // if(res.data.data[i].village == '六合庄') {
-            //     that.tableData.push(res.data.data[i])
-            // }
-            if(res.data.data[i].village.indexOf('六合庄') != -1) {
-              // console.log(res.data.data[i].village.indexOf('六合庄'))
-              that.tableData.push(res.data.data[i])
-            }
+          if(res.data.data[i].village) {
+              if(res.data.data[i].village.indexOf('六合庄') != -1) {
+                that.tableData.push(res.data.data[i])
+              }
+          }
+            
         }
-        console.log(that.tableData.length)
-        // that.tableData = res.data.data
+        // console.log(that.tableData.length)
       }).catch(function(err){
         console.log(err)
       })
@@ -259,19 +263,16 @@ export default {
     addData() {
       const that = this
       that.formLabelAlign= {
-        landlordId: null,
-        landlordName: null,
-        landlordRelationshipNumber: null,
-        landlordRelationship: null,
-        registered:null,
-        userName:null,
-        sex:null,
-        userAddress:null,
-        idCard:null,
-        workAddress:null,
-        phoneNumber:null,
-        rfid: null,
-        carNumber: null
+        userOwnerId: null,
+        realName: null,
+        phoneNumber: null,
+        town: '北臧村镇',
+        village: null,
+        commonAddress:null,
+        userState:null,
+        userType:null,
+        rfid:null,
+        village: '六合庄村'
       },
       that.showAddForm = true
     },
@@ -293,18 +294,18 @@ export default {
       })
     },
     //添加用户表单
-    submitAddForm(formName,statue) {
+    submitAddForm(formName) {
       const that = this
-      if(formName.landlordName== null) {
+      if(!formName.realName) {
         that.$message({
-              message: '请填写户主名字',
+              message: '请输入姓名',
               type: 'warning'
         });
         return false
       }
-      if(formName.phoneNumber== null) {
+      if(!formName.phoneNumber) {
         that.$message({
-              message: '请填写手机号',
+              message: '请输入用户电话',
               type: 'warning'
         });
         return false
@@ -315,34 +316,74 @@ export default {
         });
         return false
       }
-      if(formName.rfid== null) {
+      if(!formName.commonAddress) {
         that.$message({
-              message: '请填写FRID编号',
+              message: '请输入地址',
               type: 'warning'
         });
         return false
       }
-
+       if(!formName.rfid) {
+        that.$message({
+              message: '请填写RFID',
+              type: 'warning'
+        });
+        return false
+      }
+       if(!formName.rfid) {
+        that.$message({
+              message: '请填写车牌',
+              type: 'warning'
+        });
+        return false
+      }
+      if(!formName.userState) {
+        that.$message({
+              message: '请选择用户状态',
+              type: 'warning'
+        });
+        return false
+      }
+      if(!formName.userType) {
+        that.$message({
+              message: '请选择用户类型',
+              type: 'warning'
+        });
+        return false
+      }
+      if(that.userTypeNum == 3 || that.userTypeNum == 4) {
+        if(!formName.userOwerName) {
+          that.$message({
+                message: '请输入户主姓名',
+                type: 'warning'
+          });
+          return false
+        }
+        if(!formName.userOwerPhoneNumber) {
+          that.$message({
+                message: '请输入户主手机号',
+                type: 'warning'
+          });
+          return false
+        }
+      }
+     
       const obj = {
-        landlordId: formName.landlordId,
-        landlordName: formName.landlordName,
-        landlordRelationshipNumber: formName.landlordRelationshipNumber,
-        landlordRelationship: formName.landlordRelationship,
-        registered:formName.registered,
-        userName:formName.userName,
-        sex:formName.sex,
-        userAddress:formName.userAddress,
-        idCard:formName.idCard,
-        workAddress:formName.workAddress,
-        phoneNumber:formName.phoneNumber,
-        rfid: formName.rfid,
-        carNumber: formName.carNumber,
-        focusAttention: Number(formName.focusAttention)
+        userOwerName:formName.userOwerName,
+        userOwerPhoneNumber:formName.userOwerPhoneNumber,
+        realName: formName.realName,
+        phoneNumber: formName.phoneNumber,
+        town: '北臧村镇',
+        village: '六合庄村',
+        commonAddress:formName.commonAddress,
+        rfid:formName.rfid,
+        carNumber:formName.carNumber,
+        userState:Number(formName.userState),
+        userType:Number(formName.userType),
       }
 
         // 返回后台添加单条的信息
-        this.$axios.post(that.api+'FamilyInfo/insert',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
-
+        this.$axios.post(that.api+'userInfo/insertUsers',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
           if(res.data.success) {
             that.$message({
               message: res.data.message,
@@ -429,6 +470,38 @@ export default {
           console.log(err)
         })
     },
+    // 搜索
+    searchUser() {
+      const that = this
+      if(that.searchName) {
+      const http = that.api+'userInfo/fuzzySelectUserInfoByRealName?realName='+ that.searchName
+        this.$axios.get(http).then(function(res){
+          console.log(res.data.data)
+          that.tableData = []
+          for(let i = 0; i<res.data.data.length; i++) {
+              if(res.data.data[i].village.indexOf('六合庄') != -1) {
+                  that.tableData.push(res.data.data[i])
+              }
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
+      } else{
+        that.showList()
+      }
+
+    },
+    selectType(e) {
+      console.log(e)
+      this.userTypeNum = e
+      if(e == 1 || e == 2) {
+        this.finllInfo = true
+        this.formLabelAlign.userOwerName = null
+        this.formLabelAlign.userOwerPhoneNumber = null
+      } else {
+        this.finllInfo = false
+      }
+    }
   } 
 };
 </script>
@@ -449,6 +522,18 @@ export default {
     /* display: none; */
     overflow: auto;
     z-index: 99;
+}
+.searchOrder{
+  width: 350px;
+  height: 30px;
+  border-radius: 5px;
+  line-height: 30px;
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
 }
 
 

@@ -64,10 +64,8 @@ export default {
   },
   mounted(){
       // 获取后台数据
-     
         const that = this
         this.$axios.get(that.api+'hzInfo/selectAllInfo').then(function(res){
-        
           that.tableData = res.data.data
           console.log(that.tableData);
         }).catch(function(err){
