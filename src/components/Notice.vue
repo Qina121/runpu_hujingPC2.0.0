@@ -269,8 +269,11 @@ export default {
       const landlordId = Number(item.landlordId)
       const http = that.api+'notice/selectOneById/'+id
       this.$axios.get(http).then(function(res){
+        
         //先获取数据回填
         const data = res.data.data
+        that.noticeImageId = data.attachment
+
         that.changeformLabelAlign =  {
             announceTime: data.announceTime,
             content: data.content,
@@ -288,6 +291,8 @@ export default {
     //添加表单数据
     addData() {
       const that = this
+      that.imageUrl = null
+      that.noticeImageId = null
       that.formLabelAlign= {
         announceTime: null,
         content: null,
@@ -404,7 +409,12 @@ export default {
         }
         let uploadPictures = ''
         if(that.noticeImageId) {
-          uploadPictures = that.noticeImageId.join(",")
+          if(that.noticeImageId.constructor===Array) {
+             uploadPictures = that.noticeImageId.join(",")
+          } else {
+             uploadPictures = that.noticeImageId
+          }
+         
         } else {
           uploadPictures = null
         }
@@ -472,6 +482,7 @@ export default {
       ).then(function(res){
         console.log(res);
         that.noticeImageId = res.data.data
+        console.log(that.noticeImageId)
         if(res.data.success) {
           that.$message({
             message: res.data.message,
