@@ -85,6 +85,7 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
+          <div style="display:inline-block;color:#ccc">建议图片大小为820*550</div>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitAddForm(formLabelAlign)">立即添加</el-button>
@@ -126,6 +127,7 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
+          <div style="display:inline-block;color:#ccc">建议图片大小为820*550</div>
         </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="changeForm(changeformLabelAlign)">立即修改</el-button>

@@ -1,6 +1,16 @@
 <template>
  <div class="Allbox">
    <!-- <el-button type="primary" @click="addData()">添加数据</el-button> -->
+   <div class="searchOrder">
+      <el-select v-model="searchType" placeholder="请选择用户类型">
+        <!-- <el-option label="管理员" value="1"></el-option> -->
+        <el-option label="业主" value="2"></el-option>
+        <el-option label="住户" value="3"></el-option>
+        <el-option label="租户" value="4"></el-option>
+      </el-select>
+  	  <el-button type="primary" @click="searchOrder">搜索</el-button>
+      <el-button type="primary" @click="untreated()">查询未处理的用户</el-button>
+   </div>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -9,6 +19,9 @@
     >
         <el-table-column prop="id" label="ID"  width="120"></el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
+        <el-table-column  label="用户类型" width="160">
+        <template slot-scope="scope">{{scope.row.userType=== 1? '管理员': scope.row.userType=== 2? '业主':scope.row.userType=== 3? '住户':scope.row.userType=== 4? '租户':''}}</template>
+      </el-table-column>
       <el-table-column prop="realName" label="用户姓名"  width="120"></el-table-column>
       <el-table-column prop="phoneNumber" label="手机号" width="160"></el-table-column>
       <el-table-column prop="carNumber" label="车牌号" width="160"></el-table-column>
@@ -20,20 +33,21 @@
       <!-- <el-table-column prop="carnumber" label="车牌号" width="160"></el-table-column> -->
       <!-- <el-table-column prop="creattime" label="创建日期" width="160"></el-table-column> -->
       <el-table-column prop="userOwnerId" label="户主ID" width="160"></el-table-column>
-       <el-table-column  label="用户状态" width="160">
+       <!-- <el-table-column  label="用户状态" width="160">
         <template slot-scope="scope">{{scope.row.userState=== 1? '未审批': '已审批'}}</template>
-      </el-table-column>
-      <el-table-column  label="用户类型" width="160">
-        <template slot-scope="scope">{{scope.row.userType=== 1? '管理员': scope.row.userType=== 2? '业主':scope.row.userType=== 3? '住户':scope.row.userType=== 4? '租户':''}}</template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <!-- <el-button
           size="mini"
           @click="pay(scope.$index, scope.row)">缴费</el-button> -->
-        <el-button
+        <!-- <el-button
           size="mini"
-          @click="changeData(scope.$index, scope.row)">更改</el-button>
+          @click="changeData(scope.$index, scope.row)">更改</el-button> -->
+          <div v-if="scope.row.userState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
+          <el-button v-if="scope.row.userState === 1"
+          size="mini"
+          @click="approved(scope.$index, scope.row)">未处理</el-button>
           <el-button
           size="mini"
           @click="deleteData(scope.$index, scope.row, tableData)">删除</el-button>
@@ -167,6 +181,7 @@ export default {
   },
   data() {
     return {
+      searchType: null,
       showAddForm: false,
       showChangeForm: false,
       tableData: [],
@@ -403,10 +418,54 @@ export default {
     closeChangeForm() {
       this.showChangeForm = false
     },
+    searchOrder() {
+      const that = this
+      // 新地址https://api.huijingwuye6688.com
+      this.$axios.get(that.api+'userInfo/selectAllInfo').then(function(res){
+        that.tableData = []
+        for(let i = 0;  i< res.data.data.length; i++) {
+          if(res.data.data[i].userType == that.searchType) {
+              that.tableData.push(res.data.data[i])
+          }
+        }
+        // that.tableData = res.data.data
+      }).catch(function(err){
+        console.log(err)
+      })
+    },
+    untreated() {
+      const that = this
+      // 新地址https://api.huijingwuye6688.com
+      this.$axios.get(that.api+'userInfo/selectAllInfo').then(function(res){
+        that.tableData = []
+        for(let i = 0;  i< res.data.data.length; i++) {
+          if(res.data.data[i].userState == 1) {
+              that.tableData.push(res.data.data[i])
+          }
+        }
+        // that.tableData = res.data.data
+      }).catch(function(err){
+        console.log(err)
+      })
+    },
+    //后台审核用户
+    approved(index,item) {
+      const that = this
+      const http = that.api+'userInfo/updateUserInfoApplicationStatus?id='+item.id+'&&userState='+2+'&&realName='+item.realName+'&&phoneNumber='+item.phoneNumber+'&&userType='+item.userType
+        this.$axios.get(http).then(function(res){
+          if(res.data.success) {
+            that.$message({
+              message: res.data.message,
+              type: 'success'
+            });
 
-    // pay() {
-    //   console.log('缴费')
-    // }
+            // that.showTableData() 
+            that.untreated()
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
+    },
   } 
 };
 </script>
@@ -429,5 +488,16 @@ export default {
     z-index: 99;
 }
 
+.searchOrder{
+  width: 350px;
+  height: 30px;
+  border-radius: 5px;
+  line-height: 30px;
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
+}
 </style>

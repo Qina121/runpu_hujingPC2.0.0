@@ -9,7 +9,7 @@
       :data="tableData"
       style="width: 100%"
       show-header
-      border  height="800"
+      border  :height="tableHeight"
     >
       <el-table-column :resizable="false" prop="id" label="商品ID"  width="160"></el-table-column>
       <el-table-column :resizable="false" prop="goodsName" label="商品名称" width="160"></el-table-column>
@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       searchOrderId: '',
+      tableHeight: window.innerHeight  - 190,
       tableData: [
         {
             id: "1",

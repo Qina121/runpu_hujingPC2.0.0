@@ -463,7 +463,6 @@ export default {
     },
     //后台审核用户
     approved(index,item) {
-      console.log(index, item)
       const that = this
       const http = that.api+'userInfo/updateUserInfoApplicationStatus?id='+item.id+'&&userState='+2+'&&realName='+item.realName+'&&phoneNumber='+item.phoneNumber+'&&userType='+item.userType
         this.$axios.get(http).then(function(res){
@@ -485,7 +484,6 @@ export default {
       if(that.searchName) {
       const http = that.api+'userInfo/fuzzySelectUserInfoByRealName?realName='+ that.searchName
         this.$axios.get(http).then(function(res){
-          console.log(res.data.data)
           that.tableData = []
           for(let i = 0; i<res.data.data.length; i++) {
               if(res.data.data[i].village == '新立村') {
@@ -501,7 +499,6 @@ export default {
 
     },
     selectType(e) {
-      console.log(e)
       this.userTypeNum = e
       if(e == 1 || e == 2) {
         this.finllInfo = true
