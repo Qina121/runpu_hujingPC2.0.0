@@ -7,12 +7,12 @@
       show-header
       border  height="800"
     >
-     <el-table-column :resizable="false" prop="createTime" label="创建日期"  width="160"></el-table-column>
-      <el-table-column :resizable="false" prop="address" label="地址"  width="160"></el-table-column>
       <el-table-column :resizable="false" prop="id" label="ID" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="createTime" label="创建日期"  width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="address" label="地址"  width="160"></el-table-column>
       <el-table-column :resizable="false" prop="name" label="名字" width="160"></el-table-column>
       <el-table-column :resizable="false" prop="phoneNumber" label="手机号" width="160"></el-table-column>
-      <el-table-column :resizable="false" prop="reapirState" label="状态" width="160"></el-table-column>
+      <el-table-column :resizable="false" prop="appointmentTime" label="预约时间" width="160"></el-table-column>
       <!-- <el-table-column prop="plateNumber" label="台数" width="160"></el-table-column> -->
       <el-table-column :resizable="false" prop="repairDesc" label="报修描述" width="160"></el-table-column>
       <el-table-column :resizable="false" prop="userId" label="用户ID"  width="160"></el-table-column>
