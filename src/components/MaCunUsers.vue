@@ -119,10 +119,10 @@
           <el-input v-model="changeformLabelAlign.carNumber"></el-input>
         </el-form-item>
         <el-form-item label="镇">
-          <el-input v-model="changeformLabelAlign.town"></el-input>
+          <el-input :disabled="true" v-model="changeformLabelAlign.town"></el-input>
         </el-form-item>
         <el-form-item label="村">
-          <el-input v-model="changeformLabelAlign.village"></el-input>
+          <el-input :disabled="true" v-model="changeformLabelAlign.village"></el-input>
         </el-form-item>
         <el-form-item label="详细地址">
           <el-input v-model="changeformLabelAlign.commonAddress"></el-input>
