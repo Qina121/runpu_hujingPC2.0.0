@@ -382,7 +382,7 @@ export default {
       }
 
         // 返回后台添加单条的信息
-        this.$axios.post(that.api+'userInfo/insertUsers',obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
+        this.$axios.post(that.api+'userInfo/insertUsers/'+formName.userOwerName+'/'+formName.userOwerPhoneNumber,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
 
           if(res.data.success) {
             that.$message({
@@ -456,7 +456,7 @@ export default {
     approved(index,item) {
       console.log(index, item)
       const that = this
-      const http = that.api+'userInfo/updateUserInfoApplicationStatus?id='+item.id+'&&userState='+2+'&&realName='+item.realName+'&&phoneNumber='+item.phoneNumber
+      const http = that.api+'userInfo/updateUserInfoApplicationStatus?id='+item.id+'&&userState='+2+'&&realName='+item.realName+'&&phoneNumber='+item.phoneNumber+'&&userType='+item.userType
         this.$axios.get(http).then(function(res){
           if(res.data.success) {
             that.$message({
