@@ -38,6 +38,9 @@ VueRouter.prototype.push = function push(location) {
   {
     path: '/home',
     name: 'About',
+    meta: {
+      requiresAuth:true
+    },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -47,106 +50,169 @@ VueRouter.prototype.push = function push(location) {
         path: 'AboutUser',
         name: 'AboutUser',
         component: AboutUser,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'AdministratorRecordForm',
         name: 'AdministratorRecordForm',
         component: AdministratorRecordForm,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'OtherRecordForm',
         name: 'OtherRecordForm',
         component: OtherRecordForm,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'AdministratorRecordForm',
         name: 'AdministratorRecordForm',
         component: AdministratorRecordForm,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'WarrantyApproval',
         name: 'WarrantyApproval',
         component: WarrantyApproval,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'RefuseClassification',
         name: 'RefuseClassification',
         component: RefuseClassification,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'VehicleManagement',
         name: 'VehicleManagement',
         component: VehicleManagement,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'AdministratorApproval',
         name: 'AdministratorApproval',
         component: AdministratorApproval,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'UserRecordForm',
         name: 'UserRecordForm',
         component: UserRecordForm,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'Notice',
         name: 'Notice',
         component: Notice,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'HzFilingForm',
         name: 'HzFilingForm',
         component: HzFilingForm,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'Commodity',
         name: 'Commodity',
         component: Commodity,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'PurchaseList',
         name: 'PurchaseList',
         component: PurchaseList,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'AdministratorVehicleMnagement',
         name: 'AdministratorVehicleMnagement',
         component: AdministratorVehicleMnagement,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'AdministratorServiceManagement',
         name: 'AdministratorServiceManagement',
         component: AdministratorServiceManagement,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'AdministratorEventUpload',
         name: 'AdministratorEventUpload',
         component: AdministratorEventUpload,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'UsersForm',
         name: 'UsersForm',
         component: UsersForm,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'LiuHeCunUsers',
         name: 'LiuHeCunUsers',
         component: LiuHeCunUsers,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'XinLiCunUsers',
         name: 'XinLiCunUsers',
         component: XinLiCunUsers,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'MaCunUsers',
         name: 'MaCunUsers',
         component: MaCunUsers,
+        meta: {
+          requiresAuth:true
+        },
       },
       {
         path: 'LicensePlateTimeliness',
         name: 'LicensePlateTimeliness',
         component: LicensePlateTimeliness,
+        meta: {
+          requiresAuth:true
+        },
       },
 
     ]
