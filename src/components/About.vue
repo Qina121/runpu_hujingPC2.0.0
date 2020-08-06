@@ -97,7 +97,7 @@
             </template>
             <el-menu-item-group>
               <!-- UsersForm获取的是所有的用户--现在要分为三个村的用户 -->
-              <el-menu-item index="/home/UsersForm" >用户表</el-menu-item>
+              <el-menu-item index="/home/UsersForm">用户表</el-menu-item>
               <el-menu-item index="/home/XinLiCunUsers">新立村用户</el-menu-item>
               <el-menu-item index="/home/LiuHeCunUsers">六合庄村用户</el-menu-item>
               <el-menu-item index="/home/MaCunUsers">马村用户</el-menu-item>

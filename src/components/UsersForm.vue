@@ -10,6 +10,9 @@
       </el-select>
   	  <el-button type="primary" @click="searchOrder">搜索</el-button>
       <el-button type="primary" @click="untreated()">查询未处理的用户</el-button>
+      <!-- 按名字查询用户 -->
+      <el-input style="width:150px;margin-left:10px" v-model="searchName" placeholder="请输入姓名"></el-input>
+  	  <el-button type="primary" @click="searchUser">搜索</el-button>
    </div>
     <el-table
       :data="tableData"
@@ -36,15 +39,18 @@
        <!-- <el-table-column  label="用户状态" width="160">
         <template slot-scope="scope">{{scope.row.userState=== 1? '未审批': '已审批'}}</template>
       </el-table-column> -->
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column fixed="right" label="操作" width="260">
         <template slot-scope="scope">
+          <el-button
+          size="mini"
+          @click="checkIntegral(scope.$index, scope.row, tableData)">查积分明细</el-button>
           <!-- <el-button
           size="mini"
           @click="pay(scope.$index, scope.row)">缴费</el-button> -->
         <!-- <el-button
           size="mini"
           @click="changeData(scope.$index, scope.row)">更改</el-button> -->
-          <div v-if="scope.row.userState !== 1" style="display:inline-block;margin-right:10px;">已处理</div>
+          <div v-if="scope.row.userState !== 1" style="display:inline-block;margin:0 10px;">已处理</div>
           <el-button v-if="scope.row.userState === 1"
           size="mini"
           @click="approved(scope.$index, scope.row)">未处理</el-button>
@@ -167,6 +173,16 @@
 
         </el-form>
     </div>
+
+
+    <div class="scoreShow" v-if="scoreShow">
+      <div v-for="item in scoreList" class="scoreItem">
+        <span class="smallBoxs">积分{{item.score > 0 ? '+' + item.score : item.score}}</span>
+         <span class="stylered">{{item.scoreDesc}}</span>
+        <span class="styleblod">{{item.createTime}}</span>
+      </div>
+      <el-button type="primary" style="float:right;" @click="closeScore()">返回</el-button>
+    </div>
       
   
   </div>
@@ -181,9 +197,12 @@ export default {
   },
   data() {
     return {
+      searchName: '',
       searchType: null,
       showAddForm: false,
       showChangeForm: false,
+      scoreShow: false,
+      scoreList: [],
       tableData: [],
       formLabelAlign: {
         landlordId: null,
@@ -466,6 +485,43 @@ export default {
           console.log(err)
         })
     },
+    // 搜索
+    searchUser() {
+      const that = this
+      if(that.searchName) {
+        if(!isNaN(Number(that.searchName))) {
+          that.$message({
+            message: '搜索内容不正确',
+            type: 'error'
+          });
+        } else {
+          const http = that.api+'userInfo/fuzzySelectUserInfoByRealName?realName='+ that.searchName
+            this.$axios.get(http).then(function(res){
+              that.tableData = []
+              that.tableData = res.data.data
+            }).catch(function(err){
+              console.log(err)
+            })
+        }
+      } else{
+        that.showList()
+      }
+
+    },
+    checkIntegral(index,item){
+      const that = this
+      that.scoreShow = true
+      const http = that.api+'scoreLogs/selectScoredById?userId='+ item.id
+      this.$axios.get(http).then(function(res){
+        console.log(res)
+        that.scoreList = res.data.data
+      }).catch(function(err){
+        console.log(err)
+      })
+    },
+    closeScore() {
+      this.scoreShow = false
+    },
   } 
 };
 </script>
@@ -489,7 +545,7 @@ export default {
 }
 
 .searchOrder{
-  width: 350px;
+  width: 700px;
   height: 30px;
   border-radius: 5px;
   line-height: 30px;
@@ -499,5 +555,54 @@ export default {
   align-items: center;
   justify-content: space-around;
 
+}
+
+.scoreShow{
+   position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -280px;
+    width:450px;
+    height:560px;
+    background-color:#fff;
+    padding: 28px 90px;
+    border: 2px solid #999;
+    border-radius: 10px;
+    /* display: none; */
+    overflow: auto;
+    z-index: 100;
+}
+.scoreItem{
+  height: 50px;
+}
+.smallBoxs {
+    width: 20%;
+    height: 50rpx;
+    float: left;
+    background-color: #A60001;
+    color:#fff;
+    border-radius: 50rpx;
+    text-align: center;
+}
+.stylered {
+    width: 54%;
+    height: 50rpx;
+    line-height: 50rpx;
+    color:#a60001;
+    font-size: 26rpx;
+    text-align: center;
+    float: left;
+    margin: 0 10px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.styleblod {
+    font-family:Impact;
+    font-size: 26rpx;
+    width: 20%;
+    float: right;
+    text-align: center;
 }
 </style>
