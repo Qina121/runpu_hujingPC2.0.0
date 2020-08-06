@@ -15,7 +15,7 @@
         <template slot-scope="scope">{{scope.row.goodsItems=== '1'? '食品': scope.row.goodsItems=== '2'? '衣服':scope.row.goodsItems=== '3'? '家用日常': ''}}</template>
       </el-table-column>
       <el-table-column :resizable="false" prop="goodsName" label="商品名称"  width="160"></el-table-column>
-      <el-table-column :resizable="false" label="商品图片"  width="100">
+      <el-table-column :resizable="false" label="商品图片"  width="110">
         <template slot-scope="scope">
 　　　　    <img :src="scope.row.goodsPicture" width="80" height="80" />
 　　    </template>
@@ -202,7 +202,7 @@ export default {
           const that = this
           this.showChangeForm = true
           // 获取单条数据
-          const goodsId = Number(item.goodsId)
+          const goodsId = item.goodsId
           const http = that.api+'MallGoods/selectOneInfo/'+goodsId
           this.$axios.get(http).then(function(res){
  
