@@ -438,7 +438,8 @@ export default {
               type: 'success'
             });
             that.closeChangeForm()
-            that.showTableData() 
+            // that.showTableData() 
+            that.searchUser()
           }
         }).catch(function(err){
           console.log(err)
@@ -487,7 +488,7 @@ export default {
           console.log(err)
         })
       } else{
-        that.showList()
+        that.showTableData()
       }
 
     },

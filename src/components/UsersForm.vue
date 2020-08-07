@@ -423,7 +423,8 @@ export default {
               type: 'success'
             });
             that.closeChangeForm()
-            that.showTableData() 
+            // that.showTableData() 
+            that.searchUser()
           }
         }).catch(function(err){
           console.log(err)
@@ -504,10 +505,11 @@ export default {
             })
         }
       } else{
-        that.showList()
+        that.showTableData()
       }
 
     },
+    //积分
     checkIntegral(index,item){
       const that = this
       that.scoreShow = true

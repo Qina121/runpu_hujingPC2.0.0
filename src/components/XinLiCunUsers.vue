@@ -375,7 +375,7 @@ export default {
           return false
         }
       }
-     
+
       const obj = {
         userOwerName:formName.userOwerName,
         userOwerPhoneNumber:formName.userOwerPhoneNumber,
@@ -389,7 +389,7 @@ export default {
         userState:Number(formName.userState),
         userType:Number(formName.userType),
       }
-
+      
         // 返回后台添加单条的信息
         this.$axios.post(that.api+'userInfo/insertUsers/'+formName.userOwerName+'/'+formName.userOwerPhoneNumber,obj,{headers:{'Content-Type':'application/json'}}).then(function(res){
 
@@ -447,7 +447,8 @@ export default {
               type: 'success'
             });
             that.closeChangeForm()
-            that.showTableData() 
+            // that.showTableData() 
+            that.searchUser()
           }
         }).catch(function(err){
           console.log(err)
@@ -494,7 +495,7 @@ export default {
           console.log(err)
         })
       } else{
-        that.showList()
+        that.showTableData()
       }
 
     },
