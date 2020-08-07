@@ -115,6 +115,10 @@
               <el-menu-item index="/home/PurchaseList">购买列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+          <el-menu-item index="/home/IntegralRecord">
+            <i class="el-icon-menu"></i>
+            <span slot="title">积分记录</span>
+          </el-menu-item>
         </el-menu>
         <el-main style="width:80%">
           <router-view/>

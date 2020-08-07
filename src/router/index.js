@@ -22,6 +22,7 @@ import LiuHeCunUsers from '../components/LiuHeCunUsers.vue'
 import XinLiCunUsers from '../components/XinLiCunUsers.vue'
 import MaCunUsers from '../components/MaCunUsers.vue'
 import LicensePlateTimeliness from '../components/LicensePlateTimeliness.vue'
+import IntegralRecord from '../components/IntegralRecord.vue'
 
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
@@ -210,6 +211,14 @@ VueRouter.prototype.push = function push(location) {
         path: 'LicensePlateTimeliness',
         name: 'LicensePlateTimeliness',
         component: LicensePlateTimeliness,
+        meta: {
+          requiresAuth:true
+        },
+      },
+      {
+        path: 'IntegralRecord',
+        name: 'IntegralRecord',
+        component: IntegralRecord,
         meta: {
           requiresAuth:true
         },
